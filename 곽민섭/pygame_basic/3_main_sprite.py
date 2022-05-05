@@ -7,11 +7,11 @@ screen_width = 480  # 가로 크기
 screen_height = 640 # 세로 크기
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-# 화면 타이틀 설정
-pygame.display.set_caption("Nado Game")  # 게임 이름
-
 # 배경 이미지 불러오기
-background = pygame.image.load("C:/Users/user/OneDrive/바탕 화면/pygame_basic/background.png")
+background = pygame.image.load("C:/Users/user/OneDrive/바탕 화면/곽민섭/pygame_basic/background.png")
+
+# 캐릭터(스프라이트) 불러오기
+character = pygame.image.load("C:/Users/user/OneDrive/바탕 화면/곽민섭/pygame_basic/character.png")
 
 # 캐릭터(스프라이트) 불러오기
 character = pygame.image.load("C:/Users/user/OneDrive/바탕 화면/pygame_basic/character.png")
