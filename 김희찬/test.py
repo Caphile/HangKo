@@ -2,13 +2,17 @@ import sys
 import pygame as pg
 #from pygame.locals import*
 
-pg.init()
+def play():
+    pg.init()
 
-disp = pg.display.set_mode((800, 600))
-pg.display.set_caption("test")
+    pg.display.set_caption("test")
+    screen = pg.display.set_mode((800, 600))
 
-running = True
-while running:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
+    screen.fill((255, 255, 0))
+    pg.display.flip()
+
+    running = True
+    while running:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                running = False
