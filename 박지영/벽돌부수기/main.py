@@ -1,13 +1,13 @@
-import pygame       #45줄 오류 - TypeError: 'module' object is not callable
+import pygame         #45줄 오류 - TypeError: 'module' object is not callable
 import random
 
-pygame.init()
+pygame.init()   
 
 background = pygame.display.set_mode((480, 360))
-pygame.display.set_caption("벽돌 부수기")
+pygame.display.set_caption("벽돌 부수기")   
 
 # 배경 사이즈
-size_width_bg = background.get_size()[0]  # 0번 칸은 가로
+size_width_bg = background.get_size()[0]  # 0번 칸은 가로   
 size_height_bg = background.get_size()[1]  # 1번 칸은 세로
 
 # 페달의 사이즈, 좌표, Rect
@@ -29,9 +29,9 @@ rect_ball = pygame.Rect(x_pos_ball, y_pos_ball,                                 
                         size_radius_ball*2, size_radius_ball*2)
 rect_ball.center = (x_pos_ball, y_pos_ball)
 
-# 블록 사이즈, 좌표, Rect
-size_width_block = size_width_bg // 10
-size_height_block = 30
+# 블록 사이즈, 좌표, Rect  
+size_width_block = size_width_bg // 10  
+size_height_block = 30  
 
 x_pos_block = 0
 y_pos_block = 0
