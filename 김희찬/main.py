@@ -11,6 +11,8 @@ currentPath = os.path.join(currentPath, 'HangKo')
 def mainStart():
     pg.init()
 
+    print("변경")
+
     # 기본 틀
     pg.font.SysFont("notosanscjkkr", 10)
     pg.display.set_caption("프로그램 이름(미정)")
