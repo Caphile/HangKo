@@ -18,10 +18,17 @@ def mainStart():
     mainDis.fill(c.WHITE)
 
     # 버튼 구성
-    playBtn = pg.draw.rect(mainDis, c.GRAY, (300, 20, 50, 50), 1) # 게임시작
-    rankBtn = pg.draw.rect(mainDis, c.GRAY, (300, 70, 50, 50), 1) # 랭킹
-    setBtn = pg.draw.rect(mainDis, c.GRAY, (300, 120, 50, 50), 1) # 설정
-    exitBtn = pg.draw.rect(mainDis, c.GRAY, (300, 170, 50, 50), 1) # 종료
+    btnWidth = 350
+    btnHeight = 28
+
+    playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
+                                             btnWidth, btnHeight * 1.5), 1) # 게임시작
+    rankBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
+                                             btnWidth, btnHeight * 1.5), 1) # 랭킹
+    setBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
+                                            btnWidth, btnHeight * 1.5), 1) # 설정
+    exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 6, 
+                                             btnWidth, btnHeight * 1.5), 1) # 종료
 
     running = True
     while running:
