@@ -3,10 +3,10 @@ import pygame as pg
 
 import common as c
 
-def gameSelectStart():
+def rankStart():
     pg.init()
 
-    pg.display.set_caption("게임선택")
+    pg.display.set_caption("순위")
     gsDis = pg.display.set_mode(c.winSize)
     gsDis.fill(c.BLACK)
 
