@@ -1,40 +1,34 @@
-import os
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
+import os
+import pygame as pg
 
-import test
+import common as c
+import gameSelect
 
 currentPath = os.getcwd()
 currentPath = os.path.join(currentPath, 'HangKo')
 
-mainForm = uic.loadUiType(currentPath + '\\main.ui')[0]
-gameSelectForm = uic.loadUiType(currentPath + '\\gameSelect.ui')[0]
+def mainStart():
+    pg.init()
 
-class Main(QMainWindow, mainForm):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-        self.pushButton.clicked.connect(self.btn)
+    # 기본 틀
+    pg.display.set_caption("main")
+    mainDis = pg.display.set_mode(c.winSize)
+    mainDis.fill(c.WHITE)
 
-    def btn(self):
-        layout = gameSelectForm
+    # 버튼 구성
+    a = pg.draw.rect(mainDis, c.GRAY, (300, 20, 50, 50), 1)
 
-        '''
-        self.hide()
-        self.gameSelect = gameSelect()
-        self.gameSelect.exec()
-        
-        self.show()
-        '''
-        
+    running = True
+    while running:
+        pg.display.flip()   # 화면 갱신
+        for event in pg.event.get():
+            # 프로그램 종료
+            if event.type == pg.QUIT:
+                running = False
+            # 클릭 이벤트
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                if a.collidepoint(event.pos):
+                    gameSelect.gameSelectStart()
 
-class gameSelect(QDialog, QWidget, gameSelectForm):
-    def __init__(self):
-        super(gameSelect, self).__init__()
-        self.show()
-            
-app = QApplication(sys.argv)
-main = Main()
-main.show()
-app.exec_()
+mainStart()
