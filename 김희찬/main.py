@@ -1,40 +1,52 @@
-import os
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
+import os
+import pygame as pg
 
-import test
+import common as c
+import gameSelect, rank, setting
 
 currentPath = os.getcwd()
 currentPath = os.path.join(currentPath, 'HangKo')
 
-mainForm = uic.loadUiType(currentPath + '\\main.ui')[0]
-gameSelectForm = uic.loadUiType(currentPath + '\\gameSelect.ui')[0]
+def mainStart():
+    pg.init()
 
-class Main(QMainWindow, mainForm):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-        self.pushButton.clicked.connect(self.btn)
+    # 기본 틀
+    pg.font.SysFont("notosanscjkkr", 10)
+    pg.display.set_caption("프로그램 이름(미정)")
+    mainDis = pg.display.set_mode(c.winSize)
+    mainDis.fill(c.WHITE)
 
-    def btn(self):
-        layout = gameSelectForm
+    # 버튼 구성
+    btnWidth = 350
+    btnHeight = 28
 
-        '''
-        self.hide()
-        self.gameSelect = gameSelect()
-        self.gameSelect.exec()
-        
-        self.show()
-        '''
-        
+    playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
+                                             btnWidth, btnHeight * 1.5), 1) # 게임시작
+    rankBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
+                                             btnWidth, btnHeight * 1.5), 1) # 랭킹
+    setBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
+                                            btnWidth, btnHeight * 1.5), 1) # 설정
+    exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 6, 
+                                             btnWidth, btnHeight * 1.5), 1) # 종료
 
-class gameSelect(QDialog, QWidget, gameSelectForm):
-    def __init__(self):
-        super(gameSelect, self).__init__()
-        self.show()
-            
-app = QApplication(sys.argv)
-main = Main()
-main.show()
-app.exec_()
+    running = True
+    while running:
+        pg.display.flip()   # 화면 갱신
+        for event in pg.event.get():
+            # 프로그램 종료
+            if event.type == pg.QUIT:
+                running = False
+            # 클릭 이벤트
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                if playBtn.collidepoint(event.pos):
+                    gameSelect.gameSelectStart()
+                elif rankBtn.collidepoint(event.pos):
+                    rank.rankStart()
+                elif setBtn.collidepoint(event.pos):
+                    setting.setStart()
+                elif exitBtn.collidepoint(event.pos):
+                    running = False
+
+mainStart()
+pg.quit()
