@@ -30,11 +30,11 @@ rect_ball = pygame.Rect(x_pos_ball, y_pos_ball,                                 
 rect_ball.center = (x_pos_ball, y_pos_ball)
 
 # 블록 사이즈, 좌표, Rect  
-size_width_block = size_width_bg // 10  
+size_width_block = size_width_bg // 10    
 size_height_block = 30  
-
-x_pos_block = 0
-y_pos_block = 0
+ 
+x_pos_block = 0  
+y_pos_block = 0  
 
 rect_block = [[] for _ in range(10)]
 color_block = [[] for _ in range(10)]
@@ -55,8 +55,8 @@ while play:
     # 배경색
     background.fill((255, 255, 255))
 
-    # 페달 그리기
-    pygame.draw.rect(background, (255, 255, 0), rect_pedal)
+    # 페달 그리기   
+    pygame.draw.rect(background, (255, 255, 0), rect_pedal)  
 
     # 공 그리기
     pygame.draw.circle(background,(255, 0, 255),(x_pos_ball,y_pos_ball),size_radius_ball)
@@ -70,4 +70,4 @@ while play:
 
     pygame.display.update()
 
-pygame.quit()
+pygame.quit()  
