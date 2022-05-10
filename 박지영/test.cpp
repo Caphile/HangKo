@@ -10,7 +10,7 @@ public:
 
 double Circle::getArea()
 {
-  return 3.14 * radius * radius;
+  return 3.14 * radius * radius;       //
 }
 
 int main()
