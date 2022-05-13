@@ -19,6 +19,12 @@ y_pos_pedal = size_height_bg - size_height_pedal
 
 rect_pedal = pygame.Rect(x_pos_pedal, y_pos_pedal,size_width_pedal, size_height_pedal)
 
+# pygame.rect는 모듈
+# 모듈은 호출 할수 없음
+# Rect 객체는 pygame.rect 모듈에 있음
+# 따라서 pygame.rect.Rect(a, b, c, d)가 옳음
+# 위의 경우 rect_pedal = pygame.rect.Rect(x_pos_pedal, y_pos_pedal,size_width_pedal, size_height_pedal)
+
 # 공 사이즈, 좌표, Rect
 size_radius_ball = 20
 
