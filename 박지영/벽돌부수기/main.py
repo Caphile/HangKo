@@ -1,7 +1,7 @@
 import pygame         #45줄 오류 - TypeError: 'module' object is not callable
 import random
-
-pygame.init()   
+   
+pygame.init()     
 
 background = pygame.display.set_mode((480, 360))
 pygame.display.set_caption("벽돌 부수기")   
