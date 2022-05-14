@@ -3,7 +3,7 @@ import random
    
 pygame.init()     
 
-background = pygame.display.set_mode((480, 360))
+background = pygame.display.set_mode((500, 800))
 pygame.display.set_caption("벽돌 부수기")   
 
 # 배경 사이즈
@@ -31,7 +31,7 @@ size_radius_ball = 20
 x_pos_ball = size_width_bg // 2
 y_pos_ball = size_height_bg - size_height_pedal - size_radius_ball
 
-rect_ball = pygame.Rect(x_pos_ball, y_pos_ball,                                   # 오류: 줄 밀림? 줄 분리?현상 __ 28줄 하나로 이어져야하는데 29줄로 넘어가버림
+rect_ball = pygame.Rect(x_pos_ball, y_pos_ball,                                   # 오류
                         size_radius_ball*2, size_radius_ball*2)
 rect_ball.center = (x_pos_ball, y_pos_ball)
 
@@ -47,9 +47,9 @@ color_block = [[] for _ in range(10)]
 
 for i in range(10):
     for j in range(3):
-        rect_block[i].append(pygame.rect(                                         # (28줄과 동일)오류: 줄 밀림? 줄 분리?현상 __ 44줄 하나로 이어져야하는데 45줄로 넘어가버림
+        rect_block[i].append(pygame.rect(                                         # (28줄과 동일)오류
           i*size_width_block, j*size_height_block, size_height_block))
-        color_block[i].append((random.randrange(255), random.randrange(           # (44줄과 동일)오류:
+        color_block[i].append((random.randrange(255), random.randrange(           # (44줄과 동일)오류
             150, 255), random.randrange(150, 255)))
 
 play = True   #콘솔창 실행
