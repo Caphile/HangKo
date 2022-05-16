@@ -3,7 +3,7 @@ import os
 import pygame as pg
 
 import common as c
-import gameSelectUI, rankUI, settingUI
+import gameSelectUI#, rankUI
 
 currentPath = os.getcwd()
 currentPath = os.path.join(currentPath, 'HangKo')
@@ -26,7 +26,7 @@ def mainStart():
 
         playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 게임시작
-        playText = pg.t
+
         rankBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 랭킹
         setBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
