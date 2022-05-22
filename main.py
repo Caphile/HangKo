@@ -3,7 +3,7 @@ import os
 import pygame as pg
 
 import common as c
-import gameSelectUI#, rankUI
+import gameSelectUI
 
 currentPath = os.getcwd()
 currentPath = os.path.join(currentPath, 'HangKo')
