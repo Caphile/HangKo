@@ -43,10 +43,10 @@ def runGame():
         background2_x -= 2
 
         if background1_x == -background_width:
-            background1_x == background_width
+            background1_x = background_width
         
         if background2_x == -background_width:
-            background2_x == background_width
+            background2_x = background_width
 
         back(background1, background1_x, 0)
         back(background2, background2_x, 0)
