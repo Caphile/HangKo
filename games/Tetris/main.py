@@ -5,10 +5,6 @@ import pygame as pg
 import common as c
 import gameSelectUI
 
-currentPath = os.getcwd()
-currentPath = os.path.join(currentPath, 'HangKo')
-print(os.listdir(currentPath))
-
 def gameStart():
 
     pg.init()
