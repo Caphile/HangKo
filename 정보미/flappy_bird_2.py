@@ -88,11 +88,9 @@ while running:
         
     obstacle_x += obstacle_to_x
 
-     COLLISION
     collision = collision_detection(obstacle_x, obstacle_height, bird_y_pos, obstacle_height + 150)
 
     if collision:
-         if a collision does occur we are gonna add that score to our list of scores and make waiting True
         score_list.append(score)
         waiting = True
 
