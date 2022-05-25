@@ -26,12 +26,9 @@ def mainStart():
 
         playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 게임시작
-
         rankBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 랭킹
-        setBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
-                                                btnWidth, btnHeight * 1.5), 1) # 설정
-        exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 6, 
+        exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
                                                  btnWidth, btnHeight * 1.5), 1) # 종료
 
         pg.display.update()   # 화면 갱신
@@ -45,10 +42,6 @@ def mainStart():
                 if playBtn.collidepoint(event.pos):
                     if gameSelectUI.gameSelectStart() == 1:
                         running = False
-                elif rankBtn.collidepoint(event.pos):
-                    rankUI.rankStart()
-                elif setBtn.collidepoint(event.pos):
-                    settingUI.setStart()
                 elif exitBtn.collidepoint(event.pos):
                     running = False
 

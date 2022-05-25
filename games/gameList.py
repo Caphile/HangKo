@@ -1,13 +1,25 @@
 import os, sys, glob
 
+import games.Tetris.main as Tet
+
 # # 게임 리스트 불러오기
-games = []
+
+game = []
+icon = []  # 아이콘 사진파일의 dir 저장
+record = [] # 기록이 저장된 파일의 dir 저장
 currentPath = os.getcwd()
 currentPath = os.path.join(currentPath, 'games')
 dirList = os.listdir(currentPath)
+
 for i in dirList:
     if not(i == '__pycache__' or i == 'gameList.py'):
-        games.append(i)
-gameNum = len(games)
+        game.append(i)
+        icon.append(os.path.join(currentPath, i, 'icon.png'))
+
+gameNum = len(game)
 gamePerPage = 6
 pageNum = int(gameNum / gamePerPage)
+
+def playSelectedGame(name):
+    if name == 'Tetris':
+        Tet.gameStart()

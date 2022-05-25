@@ -8,5 +8,5 @@ GRAY = (128, 128, 128)
 
 # Window Size
 winWidth = 720
-winHeight = 480
+winHeight = 720
 winSize = (winWidth, winHeight)
