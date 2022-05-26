@@ -32,7 +32,7 @@ def display_obstacle(height):
     pygame.draw.rect(screen, obstacle_color, pygame.Rect(obstacle_x_pos, bottom_y, obstacle_width, bottom_height))
 
 # 충돌처리
-def collision_detection (obstacle_x, obstacle_height, bird_y_pos, bottom_height):
+def collision_detection (obstacle_x_pos, obstacle_height, bird_y_pos, bottom_height):
     if obstacle_x_pos >= 50 and obstacle_x_pos <= (50 + 64):
         if bird_y_pos <= obstacle_height or bird_y_pos >= (bottom_height - 64):
             return True
