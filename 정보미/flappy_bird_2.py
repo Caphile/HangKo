@@ -26,15 +26,15 @@ obstacle_to_x = -5
 obstacle_x_pos = 450
 
 def display_obstacle(height):
-    pygame.draw.rect(screen, obstacle_color, pygame.Rect(obstacle_x, 0, obstacle_width, height))
+    pygame.draw.rect(screen, obstacle_color, pygame.Rect(obstacle_x_pos, 0, obstacle_width, height))
     bottom_y = height + 200  
     bottom_height = 635 - bottom_y
-    pygame.draw.rect(screen, obstacle_color, pygame.Rect(obstacle_x, bottom_y, obstacle_width, bottom_height))
+    pygame.draw.rect(screen, obstacle_color, pygame.Rect(obstacle_x_pos, bottom_y, obstacle_width, bottom_height))
 
 # 충돌처리
-def collision_detection (obstacle_x, obstacle_height, bird_y_pos, bottom_obstacle_height):
-    if obstacle_x >= 50 and obstacle_x <= (50 + 64):
-        if bird_y_pos <= obstacle_height or bird_y_pos >= (bottom_obstacle_height - 64):
+def collision_detection (obstacle_x, obstacle_height, bird_y_pos, bottom_height):
+    if obstacle_x_pos >= 50 and obstacle_x_pos <= (50 + 64):
+        if bird_y_pos <= obstacle_height or bird_y_pos >= (bottom_height - 64):
             return True
     return False
 
@@ -62,7 +62,7 @@ while running:
                 if event.key == pygame.K_SPACE:
                     score = 0
                     bird_y_pos = 300
-                    obstacle_x = 500
+                    obstacle_x_pos = 500
                     waiting = False
 
             if event.type == pygame.QUIT:
@@ -75,27 +75,27 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                to_y -= 5
+                to_y -= 6
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                to_y += 5
+                to_y += 3
     bird_y_pos += to_y
     if bird_y_pos <= 0:
         bird_y_pos = 0
     if bird_y_pos >= height:
         bird_y_pos = height
         
-    obstacle_x += obstacle_to_x
+    obstacle_x_pos += obstacle_to_x
 
-    collision = collision_detection(obstacle_x, obstacle_height, bird_y_pos, obstacle_height + 150)
+    collision = collision_detection(obstacle_x_pos, obstacle_height, bird_y_pos, obstacle_height + 150)
 
     if collision:
         score_list.append(score)
         waiting = True
 
-    if obstacle_x <= -10:
-        obstacle_x = 500
+    if obstacle_x_pos <= -10:
+        obstacle_x_pos = 500
         obstacle_height = random.randint(200, 400)
         score += 1
         
