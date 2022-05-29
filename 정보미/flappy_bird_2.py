@@ -3,11 +3,12 @@ import random
 
 pygame.init()
 
-height = 480
-width = 680
+height = 720
+width = 720
 screen = pygame.display.set_mode((width, height)) 
 
 background = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\pygame_basic\\pygame_1_Galaga\\images\\background.png')
+background = pygame.transform.scale(background, (720,720))
 
 # bird
 flyingbird = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\pygame_basic\\pygame_1_Galaga\\images\\main_bird.png')
@@ -28,8 +29,8 @@ obstacle_1_x_pos = width
 def display_obstacle(obstacle_1_height):
     pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, 0, obstacle_1_width, obstacle_1_height)) #(x축, y축, 가로, 세로)
     bottom_1_y = obstacle_1_height + 200
-    bottom_1_height = bottom_1_y
-    pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, bottom_1_y, obstacle_1_width, bottom_1_height))
+    pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, bottom_1_y, obstacle_1_width, height))
+
 
 # 충돌처리
 def collision_detection (obstacle_1_x_pos, obstacle_1_height, bird_y_pos, bottom_1_height):
