@@ -20,8 +20,8 @@ def gameStart():
         btnWidth = 350
         btnHeight = 28
 
-        playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
-                                                 btnWidth, btnHeight * 1.5), 1) # 게임시작
+        # playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
+        #                                         btnWidth, btnHeight * 1.5), 1) # 게임시작
         
         pg.display.update()   # 화면 갱신
 
