@@ -4,9 +4,10 @@ import pygame as pg
 
 import common as c
 
+
 def gameStart():
 
-    pg.init()
+    state = 0
 
     running = True
     while running:
@@ -16,23 +17,27 @@ def gameStart():
         mainDis = pg.display.set_mode((720, 720))
         mainDis.fill((255, 255, 255))
 
-        # 버튼 구성
-        btnWidth = 350
-        btnHeight = 28
-
-        # playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
-        #                                         btnWidth, btnHeight * 1.5), 1) # 게임시작
-        
         pg.display.update()   # 화면 갱신
 
         for event in pg.event.get():
             # 프로그램 종료
             if event.type == pg.QUIT:
                 running = False
-            # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                if playBtn.collidepoint(event.pos):
-                    if gameSelectUI.gameSelectStart() == 1:
-                        running = False
-                elif exitBtn.collidepoint(event.pos):
-                    running = False
+                state = 1
+            # 키보드 이벤트
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_LEFT:
+                    pass
+                elif event.key == pg.K_RIGHT:
+                    pass
+                elif event.key == pg.K_DOWN:    # 아래 방향키, 소프트 드랍
+                    pass
+                elif event.key == pg.K-SPACE:   # 스페이스, 하드 드랍
+                    pass
+                elif event.key == pg.K-z:   # z키, 반 시계 회전
+                    pass
+                elif event.key == pg.K-x:   # x키, 시계 회전
+                    pass
+
+    return state
+

@@ -21,8 +21,9 @@ gameNum = len(game)
 gamePerPage = 6
 pageNum = int(gameNum / gamePerPage)
 
+# 게임선택화면 0, 프로그램 종료 1 리턴
 def playSelectedGame(name):
     if name == 'Tetris':
-        Tet.gameStart()
+        return Tet.gameStart()
     elif name == 'snakeGame':
-        snake.gameStart()
+        return snake.gameStart()
