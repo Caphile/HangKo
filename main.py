@@ -26,8 +26,6 @@ def mainStart():
 
         playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 게임시작
-        rankBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
-                                                 btnWidth, btnHeight * 1.5), 1) # 랭킹
         exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
                                                  btnWidth, btnHeight * 1.5), 1) # 종료
 
