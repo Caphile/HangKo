@@ -46,20 +46,20 @@ def gameSelectStart():
                 else:
                     color = c.WHITE
 
-            if idx % 2 == 0:
-                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + int(idx / 2)) + gameBoxWidth * (int(idx / 2)), panelTopMargin * 2, 
+            if gamePerPage / 2 > i:
+                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i) + gameBoxWidth * i, panelTopMargin * 2, 
                                                             gameBoxWidth, gameBoxHeight), 1))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
-                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + int(idx / 2)) + gameBoxWidth * (int(idx / 2)) + 5, panelTopMargin * 2 + 5))
+                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i) + gameBoxWidth * i + 5, panelTopMargin * 2 + 5))
             else:
-                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + int(idx / 2)) + gameBoxWidth * (int(idx / 2)), panelTopMargin * 2 + gameBoxHeight + gameBoxTopMargin, 
+                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i - gamePerPage / 2) + gameBoxWidth * (i - gamePerPage / 2), panelTopMargin * 2 + gameBoxHeight + gameBoxTopMargin, 
                                                             gameBoxWidth, gameBoxHeight), 1))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
-                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + int(idx / 2)) + gameBoxWidth * (int(idx / 2)) + 5, panelTopMargin * 3 + 5))
+                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i - gamePerPage / 2) + gameBoxWidth * (i - gamePerPage / 2) + 5, panelTopMargin * 2 + gameBoxHeight + gameBoxTopMargin + 5))
 
 
         # 버튼 구성

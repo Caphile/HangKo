@@ -1,6 +1,7 @@
 import os, sys, glob
 
 import games.Tetris.main as Tet
+#import games.snakeGame.main as snake
 
 # # 게임 리스트 불러오기
 
@@ -12,7 +13,7 @@ currentPath = os.path.join(currentPath, 'games')
 dirList = os.listdir(currentPath)
 
 for i in dirList:
-    if not(i == '__pycache__' or i == 'gameList.py'):
+    if not(i == '__pycache__' or i == 'gameList.py' or i == 'BrickBreaking'):
         game.append(i)
         icon.append(os.path.join(currentPath, i, 'icon.png'))
 
@@ -23,3 +24,5 @@ pageNum = int(gameNum / gamePerPage)
 def playSelectedGame(name):
     if name == 'Tetris':
         Tet.gameStart()
+    elif name == 'snakeGame':
+        snake.gameStart()

@@ -22,11 +22,11 @@ def mainStart():
 
         # 버튼 구성
         btnWidth = 350
-        btnHeight = 28
+        btnHeight = 50
 
         playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 게임시작
-        exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 4, 
+        exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
                                                  btnWidth, btnHeight * 1.5), 1) # 종료
 
         pg.display.update()   # 화면 갱신
