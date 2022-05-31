@@ -1,6 +1,5 @@
 import pygame, sys, random
-from pygame.math import Vector2
-
+from pygame.math import Vector2 
 
 class SNAKE:
     def __init__(self): # 뱀의 초기값
