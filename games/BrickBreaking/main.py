@@ -165,6 +165,18 @@ def gameStart():
         stext = st.render(str(score), True, ('white'))
         background.blit(stext, (12, 695))
 
+        #최고기록
+        try:
+            with open("bestscore.txt", "r") as f:
+                bestScore = int(f.read())
+        except FileNotFoundError:
+            bestScore = 0
+
+        if score > bestScore:
+            bestScore = score
+            with open("bestscore.txt", "w") as f:
+                f.write(str(score))
+
         pygame.display.update()
 
     pygame.quit()
