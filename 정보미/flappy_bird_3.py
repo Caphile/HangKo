@@ -8,10 +8,10 @@ def startGame():
     width = 720
     screen = pygame.display.set_mode((width, height))  # 화면 세팅
 
-    background = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\pygame_basic\\pygame_1_Galaga\\images\\background.png')
+    background = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\flappybird\\background.png')
 
     # 새
-    flyingbird = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\pygame_basic\\pygame_1_Galaga\\images\\main_bird.png')
+    flyingbird = pygame.image.load('C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\flappybird\\main_bird.png')
     character_size = flyingbird.get_rect().size # 이미지의 크기를 구해옴
     character_width = character_size[0] # 캐릭터의 가로 크기
     character_height = character_size[1] # 캐릭터의 세로 크기
@@ -179,3 +179,4 @@ def startGame():
         pygame.display.update()
 
     pygame.quit()
+startGame()
