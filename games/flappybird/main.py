@@ -1,5 +1,6 @@
 import pygame
 import random
+import os
 
 def gameStart():
     pygame.init()
@@ -7,10 +8,15 @@ def gameStart():
     height = 720
     width = 720
     screen = pygame.display.set_mode((width, height))  # 화면 세팅
-
+    
     background = pygame.image.load('.\\background.png')
+    current_path_bg = os.getcwd()
+    current_path_bg = os.path.join(currentPath, 'background.png')
+    
 
     # 새
+    current_path_fb = os.getcwd()
+    current_path_fb = os.path.join(current_path_fb, 'main_bird.png')
     flyingbird = pygame.image.load('.\\main_bird.png')
     character_size = flyingbird.get_rect().size # 이미지의 크기를 구해옴
     character_width = character_size[0] # 캐릭터의 가로 크기
