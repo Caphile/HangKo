@@ -29,7 +29,13 @@ obstacle_1_x_pos = width
 def display_obstacle(obstacle_1_height):
     pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, 0, obstacle_1_width, obstacle_1_height)) #(x축, y축, 가로, 세로)
     bottom_1_y = obstacle_1_height + 200
+    #bottom_1_height = bottom_1_y
     pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, bottom_1_y, obstacle_1_width, height))
+
+    pygame.draw.rect(screen, obstacle_2_color, pygame.Rect(obstacle_2_x_pos, 0, obstacle_2_width, obstacle_2_height)) #(x축, y축, 가로, 세로)
+    bottom_2_y = obstacle_2_height + 200
+    #bottom_1_height = bottom_1_y
+    pygame.draw.rect(screen, obstacle_2_color, pygame.Rect(obstacle_2_x_pos, bottom_2_y, obstacle_2_width, height))
 
 
 # 충돌처리
@@ -87,7 +93,8 @@ while running:
     if bird_y_pos >= height:
         bird_y_pos = height
         
-    obstacle_x_pos += obstacle_to_x
+    obstacle_1_x_pos += obstacle_1_to_x
+    obstacle_2_x_pos += obstacle_2_to_x
 
     collision = collision_detection(obstacle_1_x_pos, obstacle_1_height, bird_y_pos, obstacle_1_height + 150)
 
@@ -95,10 +102,16 @@ while running:
         score_list.append(score)
         waiting = True
 
-    if obstacle_x_pos <= -10:
-        obstacle_x_pos = 500
-        obstacle_height = random.randint(200, 400)
+    if obstacle_1_x_pos <= -10:
+        obstacle_1_x_pos = width
+        obstacle_1_height = random.randint(50,200)
         score += 1
+
+    if obstacle_2_x_pos <= -10:
+        obstacle_2_x_pos = width
+        obstacle_2_height = random.randint(50,200)
+        score += 1
+
         
     display_obstacle(obstacle_1_height)
 
