@@ -3,34 +3,34 @@ import random
 
 def gameStart():
   
-    pygame.init()
+    pygame.init()  
 
-    background = pygame.display.set_mode((720, 720))
+    background = pygame.display.set_mode((720, 720))  
     pygame.display.set_caption("BRICK BREAKING")
 
     # 배경 사이즈
     size_w_bg = background.get_size()[0]
     size_h_bg = background.get_size()[1]
-
+  
     # 페달의 사이즈, 좌표, Rect(모든 좌표를 모아서 갖고 있는 변수)
     size_w_pad = 100
     size_h_ped = 15
 
     x_pos_ped = size_w_bg // 2 - size_w_pad // 2
     y_pos_ped = size_h_bg - size_h_ped
-
+  
     rect_ped = pygame.Rect(x_pos_ped, y_pos_ped, size_w_pad, size_h_ped)
     \
 
-    to_x_ped = 0  # to_x -> 페달을 좌우로 움직이기 위함
+    to_x_ped = 0  # to_x -> 페달을 좌우로 움직이기 위함  
 
     # 공의 사이즈, 좌표, Rect
     size_r_ball = 18
 
     x_pos_ball = size_w_bg // 2
-    y_pos_ball = size_h_bg - size_h_ped - size_r_ball
+    y_pos_ball = size_h_bg - size_h_ped - size_r_ball  
 
-    rect_ball = pygame.Rect(x_pos_ball, y_pos_ball, size_r_ball*2, size_r_ball*2)
+    rect_ball = pygame.Rect(x_pos_ball, y_pos_ball, size_r_ball*2, size_r_ball*2)  
     rect_ball.center = (x_pos_ball, y_pos_ball)
 
     # 공의 방향과 스피드
