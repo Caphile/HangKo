@@ -1,4 +1,4 @@
-import pygame, sys, random
+import pygame, sys, random, os
 from pygame.math import Vector2 
 
 class SNAKE:
@@ -7,10 +7,10 @@ class SNAKE:
         self.moveDirection = Vector2(0,-1) # 뱀의 이동방향 설정
         self.newSnake = False
         
-        self.h_up = pygame.image.load('.\games\snakeGame\image\h_up.png')
-        self.h_down = pygame.image.load('.\games\snakeGame\image\h_down.png')
-        self.h_right = pygame.image.load('.\games\snakeGame\image\h_right.png')
-        self.h_left  = pygame.image.load('.\games\snakeGame\image\h_left.png')
+        self.h_up = pygame.image.load(os.path.join(image_path, "h_up.png"))
+        self.h_down = pygame.image.load(os.path.join(image_path, "h_down.png"))
+        self.h_right = pygame.image.load(os.path.join(image_path, "h_right.png"))
+        self.h_left  = pygame.image.load(os.path.join(image_path, "h_left.png"))
         
     def makeSnake(self): 
         self.headDraw()
@@ -93,14 +93,14 @@ class game:
     
     def recordScore(self):
         record = str(len(self.character.snake) - 3) # 사과 먹을 때마다 +1
-        fr=open('.\games\snakeGame\\record.txt', 'r', encoding='UTF8') # 최고기록을 저장
+        fr=open(record_path, 'r', encoding='UTF8') # 최고기록을 저장
         line = fr.readline()
         if line == '기록없음':
-            fw=open('record.txt','w') # 기록을 저장
+            fw=open(record_path,'w') # 기록을 저장
             fw.write(record)
             fw.close()
         elif int(line) < int(record): # 현재 기록이 최고기록을 넘으면
-            fw=open('record.txt','w') # 기록을 저장
+            fw=open(record_path,'w') # 기록을 저장
             fw.write(record)
             fw.close()
         fr.close()
@@ -122,8 +122,12 @@ pygame.init()
 boardSize = 20
 boardPlace = 36
 
+current_path = os.path.dirname(__file__) # 현재 파일의 위치 반환
+image_path = os.path.join(current_path, "image") # images 폴더 위치 반환
+record_path = os.path.join(current_path,'record.txt')
+
 screen = pygame.display.set_mode((boardPlace * boardSize, boardPlace * boardSize))
-apple = pygame.image.load('.\games\snakeGame\image\\apple.png')# 사과 그래픽 변경
+apple = pygame.image.load(os.path.join(image_path, "apple.png"))# 사과 그래픽 변경
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("notosanscjkkr", 30)
 SCREEN_UPDATE = pygame.USEREVENT
