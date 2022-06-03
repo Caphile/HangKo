@@ -7,10 +7,10 @@ class SNAKE:
         self.moveDirection = Vector2(0,-1) # 뱀의 이동방향 설정
         self.newSnake = False
         
-        self.h_up = pygame.image.load('.\image\h_up.png')
-        self.h_down = pygame.image.load('.\image\h_down.png')
-        self.h_right = pygame.image.load('.\image\h_right.png')
-        self.h_left  = pygame.image.load('.\image\h_left.png')
+        self.h_up = pygame.image.load('.\games\snakeGame\image\h_up.png')
+        self.h_down = pygame.image.load('.\games\snakeGame\image\h_down.png')
+        self.h_right = pygame.image.load('.\games\snakeGame\image\h_right.png')
+        self.h_left  = pygame.image.load('.\games\snakeGame\image\h_left.png')
         
     def makeSnake(self): 
         self.headDraw()
@@ -53,7 +53,7 @@ class SNAKE:
 class Apple:
     def __init__(self): 
         self.randomApple()
-        
+
     def makeApple(self):
         appleRect = pygame.Rect(int(self.place.x * boardSize),int(self.place.y* boardSize), boardSize,boardSize)
         screen.blit(apple,appleRect)
@@ -93,7 +93,7 @@ class game:
     
     def recordScore(self):
         record = str(len(self.character.snake) - 3) # 사과 먹을 때마다 +1
-        fr=open('record.txt', 'r', encoding='UTF8') # 최고기록을 저장
+        fr=open('.\games\snakeGame\\record.txt', 'r', encoding='UTF8') # 최고기록을 저장
         line = fr.readline()
         if line == '기록없음':
             fw=open('record.txt','w') # 기록을 저장
@@ -123,7 +123,7 @@ boardSize = 20
 boardPlace = 36
 
 screen = pygame.display.set_mode((boardPlace * boardSize, boardPlace * boardSize))
-apple = pygame.image.load('.\image\\apple.png')# 사과 그래픽 변경
+apple = pygame.image.load('.\games\snakeGame\image\\apple.png')# 사과 그래픽 변경
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("notosanscjkkr", 30)
 SCREEN_UPDATE = pygame.USEREVENT
@@ -160,4 +160,3 @@ def gameStart():
         pygame.display.update()
 
     pygame.quit()
-gameStart()
