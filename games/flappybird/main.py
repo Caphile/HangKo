@@ -143,10 +143,10 @@ def gameStart():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    to_y -= 4   
-            elif event.type == pygame.KEYUP:
+                    to_y = -10
+            if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
-                    to_y += 2
+                    to_y = 2
    
 
         bird_y_pos += to_y
@@ -188,4 +188,3 @@ def gameStart():
         pygame.display.update()
 
     pygame.quit()
-gameStart()
