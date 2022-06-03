@@ -2,7 +2,7 @@ import os, sys, glob
 
 import games.Tetris.main as Tet
 import games.snakeGame.main as snake
-#import games.flappybird.main as bird
+import games.flappybird.main as bird
 #import games.DDong.main as DD
 import games.BrickBreaking.main as BB
 
