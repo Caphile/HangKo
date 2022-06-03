@@ -45,34 +45,24 @@ def gameStart():
     def display_obstacle1(obstacle_1_height):
         pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, 0, obstacle_1_width, obstacle_1_height)) #(x축, y축, 가로, 세로)
         bottom_1_y = obstacle_1_height + 200
-        #bottom_1_height = bottom_1_y
         pygame.draw.rect(screen, obstacle_1_color, pygame.Rect(obstacle_1_x_pos, bottom_1_y, obstacle_1_width, height))
 
     # 장애물2
     def display_obstacle2(obstacle_2_height):
         pygame.draw.rect(screen, obstacle_2_color, pygame.Rect(obstacle_2_x_pos, 0, obstacle_2_width, obstacle_2_height)) #(x축, y축, 가로, 세로)
         bottom_2_y = obstacle_2_height + 200
-        #bottom_1_height = bottom_1_y
         pygame.draw.rect(screen, obstacle_2_color, pygame.Rect(obstacle_2_x_pos, bottom_2_y, obstacle_2_width, height))
 
     # 충돌처리
     def collision_detection1(obstacle_1_x_pos, obstacle_1_height, bird_y_pos, bottom_1_y):
-        if bird_x_pos == obstacle_1_x_pos:
-            return True
-        elif 150 <= obstacle_1_x_pos <= (150 + 80): # 기둥 사이에 있을 때:
-            if obstacle_1_x_pos == bird_x_pos:
-                return True
-            if bird_y_pos == obstacle_1_height or bird_y_pos >= bottom_1_y:
+        if 150 <= obstacle_1_x_pos <= (150 + 80): 
+            if bird_y_pos <= obstacle_1_height or bird_y_pos >= bottom_1_y:
                 return True
         return False
 
     def collision_detection2(obstacle_2_x_pos, obstacle_2_height, bird_y_pos, bottom_2_y):
-        if bird_x_pos == obstacle_2_x_pos:
-            return True
-        elif 150 <= obstacle_2_x_pos <= (150 + 80): # 기둥 사이에 있을 때:
-            if obstacle_2_x_pos == bird_x_pos:
-                return True
-            if bird_y_pos == obstacle_2_height or bird_y_pos >= bottom_2_y:
+        if 150 <= obstacle_2_x_pos <= (150 + 80):
+            if bird_y_pos <= obstacle_2_height or bird_y_pos >= bottom_2_y:
                 return True
         return False
 
