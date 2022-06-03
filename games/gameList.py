@@ -2,9 +2,9 @@ import os, sys, glob
 
 import games.Tetris.main as Tet
 import games.snakeGame.main as snake
-import games.flappybird.main as bird
-import games.DDong.main as DD
-import games.BrickBreaking as BB
+#import games.flappybird.main as bird
+#import games.DDong.main as DD
+import games.BrickBreaking.main as BB
 
 # # 게임 리스트 불러오기
 
@@ -16,7 +16,7 @@ currentPath = os.path.join(currentPath, 'games')
 dirList = os.listdir(currentPath)
 
 for i in dirList:
-    if not(i == '__pycache__' or i == 'gameList.py' or i == 'BrickBreaking'):
+    if not(i == '__pycache__' or i == 'gameList.py'):
         game.append(i)
         icon.append(os.path.join(currentPath, i, 'icon.png'))
 
