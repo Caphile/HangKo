@@ -36,7 +36,7 @@ def gameSelectStart():
         boxMargin = 40
         gameBox_X = boxMargin + gameBoxWidth / 2
         gameBox_Y = boxMargin + gameBoxHeight / 2
-        textHeight = 100
+        textHeight = 80
 
         # 게임 목록 페널 구성
         panelMargin = 30
@@ -48,6 +48,10 @@ def gameSelectStart():
         gameName = []
         gameIcon = []
         gameScore = []
+
+        nameFont = pg.font.SysFont("malgungothic", 24)
+        recordFont = pg.font.SysFont("malgungothic", 18)
+
         for i in range(gamePerPage):
             idx = currentPage * gamePerPage + i
             if focus == idx:
@@ -65,6 +69,17 @@ def gameSelectStart():
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
                     gsDis.blit(gameIcon[idx], (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * i + 15, gameBox_Y - gameBoxHeight / 2 + 5))
+
+                    name = nameFont.render(inf.game[i], True, c.BLACK)
+                    nameRect = name.get_rect()
+                    nameRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y + gameBoxHeight / 2 + 15)
+                    gsDis.blit(name, nameRect)
+
+                    record = recordFont.render(inf.record[i], True, c.BLACK)
+                    recordRect = record.get_rect()
+                    recordRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y + gameBoxHeight / 2 + 50)
+                    gsDis.blit(record, recordRect)
+
             else:
                 j = i - gamePerPage / 2
                 gameBox.append(pg.draw.rect(gsDis, color, (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y - gameBoxHeight / 2 + gameBoxHeight + textHeight, 
@@ -73,6 +88,16 @@ def gameSelectStart():
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
                     gsDis.blit(gameIcon[idx], (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * j + 15, gameBox_Y - gameBoxHeight / 2 + gameBoxHeight + textHeight + 5))
+
+                    name = nameFont.render(inf.game[i], True, c.BLACK)
+                    nameRect = name.get_rect()
+                    nameRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y + gameBoxHeight * 1.5 + textHeight + 15)
+                    gsDis.blit(name, nameRect)
+
+                    record = recordFont.render(inf.record[i], True, c.BLACK)
+                    recordRect = record.get_rect()
+                    recordRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y + gameBoxHeight * 1.5 + textHeight + 50)
+                    gsDis.blit(record, recordRect)
                    
         # 버튼 구성
         btnWidth = 300
