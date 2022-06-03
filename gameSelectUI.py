@@ -28,7 +28,7 @@ def gameSelectStart():
         gsDis.blit(backGround, (0, 0))
 
         clock = pg.time.Clock()
-        clock.tick(10)
+        clock.tick(30)
 
         # 게임 박스 구성
         gameBoxWidth = 180
@@ -130,7 +130,7 @@ def gameSelectStart():
                 running = False
                 state = 1
             # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN:
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 for i, box in enumerate(gameBox):
                     if box.collidepoint(event.pos):
                         if len(inf.icon) > i:

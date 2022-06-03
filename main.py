@@ -31,7 +31,7 @@ def mainStart():
         mainDis.blit(backGround, (0, 0))
 
         clock = pg.time.Clock()
-        clock.tick(10)
+        clock.tick(30)
 
         # 버튼 구성
         btnWidth = 350
@@ -62,7 +62,7 @@ def mainStart():
             if event.type == pg.QUIT:
                 running = False
             # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN:
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 if playBtn.collidepoint(event.pos):
                     if gameSelectUI.gameSelectStart() == 1:
                         running = False
