@@ -1,0 +1,41 @@
+class Stack:
+   def __init__(self):
+      self.items = []
+   def push(self, val):
+      self.items.append(val)
+      #return self.items
+   def pop(self):
+      try:
+         self.items.pop()
+         return self.items
+      except IndexError:
+         print('Stack is empty')
+   def top(self):
+      try:
+         return self.items[-1]
+      except IndexError:
+         print('Stack is empty')
+   def __len__(self):
+      return len(self.items)
+
+def solve(A):
+   result = 0
+   balanced = 0
+   for i in range(len(A)):
+      for_0 = Stack()
+      for_1 = Stack()
+      for j in range(i,len(A)):
+         if A[j] == '0':
+            for_0.push(A[j])
+         else:
+            for_1.push(A[j])
+         if len(for_0) != 0 and len(for_1) != 0 and (len(for_0) == len(for_1)):
+            balanced = len(for_0) * 2
+            print('balanced =', balanced)
+      if result < balanced:
+         result = balanced
+         print('result=', result)
+   return result
+      
+A = input().strip()
+print(solve(A))
