@@ -2,6 +2,9 @@ import os, sys, glob
 
 import games.Tetris.main as Tet
 import games.snakeGame.main as snake
+import games.flappybird.main as bird
+import games.DDong.main as DD
+import games.BrickBreaking as BB
 
 # # 게임 리스트 불러오기
 
@@ -27,3 +30,9 @@ def playSelectedGame(name):
         return Tet.gameStart()
     elif name == 'snakeGame':
         return snake.gameStart()
+    elif name == 'flappybird':
+        return bird.gameStart()
+    elif name == 'DDong':
+        return DD.gameStart()
+    elif name == 'BrickBreaking':
+        return BB.gameStart()
