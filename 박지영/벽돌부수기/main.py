@@ -2,7 +2,6 @@ import pygame
 import random
 # from os import path
 
-
 pygame.init()
 
 background = pygame.display.set_mode((720, 720))
