@@ -1,7 +1,7 @@
 import os, sys, glob
 
 import games.Tetris.main as Tet
-#import games.snakeGame.main as snake
+import games.snakeGame.main as snake
 
 # # 게임 리스트 불러오기
 
