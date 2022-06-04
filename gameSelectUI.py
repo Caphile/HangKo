@@ -17,25 +17,41 @@ def gameSelectStart():
     running = True
     while running:
         pg.display.set_caption("게임선택")
+        myFont = pg.font.SysFont("malgungothic", 30)
         gsDis = pg.display.set_mode(c.winSize)
         gsDis.fill(c.BLACK)
 
+        BGPath = os.getcwd()
+        BGPath = os.path.join(BGPath, 'background2.png')
+        backGround = pg.image.load(BGPath)
+        backGround = pg.transform.scale(backGround, c.winSize)
+        gsDis.blit(backGround, (0, 0))
+
+        clock = pg.time.Clock()
+        clock.tick(30)
+
+        # 게임 박스 구성
+        gameBoxWidth = 180
+        gameBoxHeight = 180
+        boxMargin = 40
+        gameBox_X = boxMargin + gameBoxWidth / 2
+        gameBox_Y = boxMargin + gameBoxHeight / 2
+        textHeight = 80
+
         # 게임 목록 페널 구성
-        panelTopMargin = 25
-        gameListPanelWidth = 560
-        gameListPanelHeight = 560
+        panelMargin = 30
+        panelWidth = c.winWidth - panelMargin * 2
+        panelHeight = boxMargin - panelMargin + gameBoxHeight * 2 + textHeight * 2
+        gameListPanel = pg.draw.rect(gsDis, c.BLACK, (panelMargin, panelMargin, panelWidth, panelHeight), 1)
 
-        gameListPanel = pg.draw.rect(gsDis, c.GRAY, ((c.winWidth - gameListPanelWidth) / 2, panelTopMargin, 
-                                                     gameListPanelWidth, gameListPanelHeight), 1)
-
-        gameBoxWidth = 150
-        gameBoxHeight = 150
-        gameBoxLeftMargin = (gameListPanelWidth - (gamePerPage / 2) * gameBoxWidth) / (gamePerPage / 2 + 1)
-        gameBoxTopMargin = (gameListPanelHeight - (gameBoxHeight * 2) - panelTopMargin) / 2
         gameBox = []
         gameName = []
         gameIcon = []
         gameScore = []
+
+        nameFont = pg.font.SysFont("malgungothic", 24)
+        recordFont = pg.font.SysFont("malgungothic", 18)
+
         for i in range(gamePerPage):
             idx = currentPage * gamePerPage + i
             if focus == idx:
@@ -47,29 +63,65 @@ def gameSelectStart():
                     color = c.WHITE
 
             if gamePerPage / 2 > i:
-                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i) + gameBoxWidth * i, panelTopMargin * 2, 
+                gameBox.append(pg.draw.rect(gsDis, color, (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y - gameBoxHeight / 2, 
                                                             gameBoxWidth, gameBoxHeight), 1))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
-                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i) + gameBoxWidth * i + 5, panelTopMargin * 2 + 5))
+                    gsDis.blit(gameIcon[idx], (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * i + 15, gameBox_Y - gameBoxHeight / 2 + 5))
+
+                    name = nameFont.render(inf.game[i], True, c.BLACK)
+                    nameRect = name.get_rect()
+                    nameRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y + gameBoxHeight / 2 + 15)
+                    gsDis.blit(name, nameRect)
+
+                    record = recordFont.render(inf.record[i], True, c.BLACK)
+                    recordRect = record.get_rect()
+                    recordRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y + gameBoxHeight / 2 + 50)
+                    gsDis.blit(record, recordRect)
+
             else:
-                gameBox.append(pg.draw.rect(gsDis, color, ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i - gamePerPage / 2) + gameBoxWidth * (i - gamePerPage / 2), panelTopMargin * 2 + gameBoxHeight + gameBoxTopMargin, 
+                j = i - gamePerPage / 2
+                gameBox.append(pg.draw.rect(gsDis, color, (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y - gameBoxHeight / 2 + gameBoxHeight + textHeight, 
                                                             gameBoxWidth, gameBoxHeight), 1))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
-                    gsDis.blit(gameIcon[idx], ((c.winWidth - gameListPanelWidth) / 2 + gameBoxLeftMargin * (1 + i - gamePerPage / 2) + gameBoxWidth * (i - gamePerPage / 2) + 5, panelTopMargin * 2 + gameBoxHeight + gameBoxTopMargin + 5))
+                    gsDis.blit(gameIcon[idx], (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * j + 15, gameBox_Y - gameBoxHeight / 2 + gameBoxHeight + textHeight + 5))
 
+                    name = nameFont.render(inf.game[i], True, c.BLACK)
+                    nameRect = name.get_rect()
+                    nameRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y + gameBoxHeight * 1.5 + textHeight + 15)
+                    gsDis.blit(name, nameRect)
 
+                    record = recordFont.render(inf.record[i], True, c.BLACK)
+                    recordRect = record.get_rect()
+                    recordRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y + gameBoxHeight * 1.5 + textHeight + 50)
+                    gsDis.blit(record, recordRect)
+                   
         # 버튼 구성
-        btnWidth = 280
+        btnWidth = 300
         btnHeight = 60
-        playBtn = pg.draw.rect(gsDis, c.GRAY, (c.winWidth / 2 - btnWidth - 20, panelTopMargin * 3 - 20 + gameListPanelHeight, 
-                                               btnWidth, btnHeight), 1) # 게임시작
-        backBtn = pg.draw.rect(gsDis, c.GRAY, (c.winWidth / 2 + 20, panelTopMargin * 3 - 20 + gameListPanelHeight, 
-                                               btnWidth, btnHeight), 1) # 뒤로가기
+        btnMargin = 20
+        playBtn_X = (c.winWidth - btnWidth - btnMargin) / 2
+        playBtn_Y = panelMargin + panelHeight + (c.winHeight - (panelMargin + panelHeight + btnHeight)) / 2 + btnHeight / 2
+        backBtn_X =(c.winWidth + btnWidth + btnMargin) / 2
+        backBtn_Y = playBtn_Y
 
+        playBtn = pg.draw.rect(gsDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y - btnHeight / 2,
+                                               btnWidth, btnHeight)) # 게임시작
+        playBtnText = myFont.render("게임시작", True, c.BLACK)
+        playTextRect = playBtnText.get_rect()
+        playTextRect.center = (playBtn_X, playBtn_Y)
+        gsDis.blit(playBtnText, playTextRect)
+
+
+        backBtn = pg.draw.rect(gsDis, c.GRAY, (backBtn_X - btnWidth / 2, backBtn_Y - btnHeight / 2, 
+                                               btnWidth, btnHeight)) # 뒤로가기
+        backBtnText = myFont.render("뒤로가기", True, c.BLACK)
+        backTextRect = backBtnText.get_rect()
+        backTextRect.center = (backBtn_X, backBtn_Y)
+        gsDis.blit(backBtnText, backTextRect)
 
         pg.display.update()
 
@@ -78,7 +130,7 @@ def gameSelectStart():
                 running = False
                 state = 1
             # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN:
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 for i, box in enumerate(gameBox):
                     if box.collidepoint(event.pos):
                         if len(inf.icon) > i:

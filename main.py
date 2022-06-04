@@ -6,7 +6,7 @@ import common as c
 import gameSelectUI
 
 currentPath = os.getcwd()
-currentPath = os.path.join(currentPath, 'HangKo')
+# currentPath = os.path.join(currentPath, 'HangKo')
 
 def mainStart():
 
@@ -15,19 +15,45 @@ def mainStart():
     running = True
     while running:
         # 기본 틀
-        pg.font.SysFont("notosanscjkkr", 10)
-        pg.display.set_caption("프로그램 이름(미정)")
+        myFont = pg.font.SysFont("malgungothic", 36)
+        pg.display.set_caption("HangKo")
         mainDis = pg.display.set_mode(c.winSize)
-        mainDis.fill(c.WHITE)
+
+        iconPath = currentPath
+        iconPath = os.path.join(iconPath, 'icon.png')
+        icon = pg.image.load(iconPath)
+        pg.display.set_icon(icon)
+
+        BGPath = currentPath
+        BGPath = os.path.join(BGPath, 'background1.png')
+        backGround = pg.image.load(BGPath)
+        backGround = pg.transform.scale(backGround, c.winSize)
+        mainDis.blit(backGround, (0, 0))
+
+        clock = pg.time.Clock()
+        clock.tick(30)
 
         # 버튼 구성
         btnWidth = 350
-        btnHeight = 50
+        btnHeight = 100
+        playBtn_X = c.winWidth / 2
+        playBtn_Y = 220 + btnHeight / 2
+        gap = 30
 
-        playBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2, 
-                                                 btnWidth, btnHeight * 1.5), 1) # 게임시작
-        exitBtn = pg.draw.rect(mainDis, c.GRAY, ((c.winWidth - btnWidth) / 2, c.winHeight / 2 + btnHeight * 2, 
-                                                 btnWidth, btnHeight * 1.5), 1) # 종료
+        playBtn = pg.draw.rect(mainDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y - btnHeight / 2, 
+                                                 btnWidth, btnHeight)) # 게임시작
+        playBtnText = myFont.render("게임시작", True, c.BLACK)
+        playTextRect = playBtnText.get_rect()
+        playTextRect.center = (playBtn_X, playBtn_Y)
+        mainDis.blit(playBtnText, playTextRect)
+
+        exitBtn = pg.draw.rect(mainDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y + btnHeight / 2 + gap, 
+                                                 btnWidth, btnHeight)) # 종료
+        playBtnText = myFont.render("종료", True, c.BLACK)
+        playTextRect = playBtnText.get_rect()
+        playTextRect.center = (playBtn_X, playBtn_Y + btnHeight + gap)
+        mainDis.blit(playBtnText, playTextRect)
+
 
         pg.display.update()   # 화면 갱신
 
@@ -36,7 +62,7 @@ def mainStart():
             if event.type == pg.QUIT:
                 running = False
             # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN:
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 if playBtn.collidepoint(event.pos):
                     if gameSelectUI.gameSelectStart() == 1:
                         running = False

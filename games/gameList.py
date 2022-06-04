@@ -20,6 +20,17 @@ for i in dirList:
         game.append(i)
         icon.append(os.path.join(currentPath, i, 'icon.png'))
 
+        try:
+            file = open(os.path.join(currentPath, i, 'record.txt'), 'r')
+            data = str(file.readline())
+            if data != '':
+                record.append(data)
+            else:
+                record.append('점수없음')
+            file.close()
+        except:
+            record.append('점수없음')
+
 gameNum = len(game)
 gamePerPage = 6
 pageNum = int(gameNum / gamePerPage)
