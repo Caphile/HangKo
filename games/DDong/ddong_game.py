@@ -1,20 +1,42 @@
-import pygame
-import random
+import pygame, sys, os, random
+
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+GRAY = (150, 150, 150)
+SCORE = 0
+
+current_path = os.path.dirname(__file__)  # 현재 파일의 위치 반환
+imamge_path = os.path.join(current_path, "images")  # images 폴더 위치 반환
+record_paht = os.path.join(current_path, 'record.txt')
+
+def draw_score():
+    font_01 = pygame.font.SysFont("FixedSsy", 30, True, False)
+    text_score = font_01.render("Score : " + str(SCORE), True, BLACK)
+    screen.blit(text_score, [15, 15])
+
+
+def increase_score():
+    global SCORE
+    SCORE += 10
+    
+
 
 def gameStart():
+    global screen
     # 화면 크기 정보
     SCREEN_WIDTH = 720
     SCREEN_HEIGHT = 720
 
     # 파이게임 초기화 및 화면 크기 지정
     pygame.init()
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # 데이터 로드
-    background_image = pygame.image.load('images/background.png')
-    platform_image = pygame.image.load('images/platform.png')
-    player_image = pygame.image.load('images/man.png')
-    ddong_image = pygame.image.load('images/ddong.png')
+    background_image = pygame.image.load(os.path.join(imamge_path, "background.png"))
+    platform_image = pygame.image.load(os.path.join(imamge_path, "platform.png"))
+    player_image = pygame.image.load(os.path.join(imamge_path, "man.png"))
+    ddong_image = pygame.image.load(os.path.join(imamge_path, "ddong.png"))
 
     # 바닥 초기화
     platform_height = platform_image.get_size()[1]
@@ -50,11 +72,11 @@ def gameStart():
     # 시계 객체 생성
     clock = pygame.time.Clock()
 
-    count = 0
 
     # 게임 루프 시작
     while is_running:
         clock.tick(60)
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -83,14 +105,17 @@ def gameStart():
         ddong_3_pos_y += 700 * clock.get_time() / 1000
 
         if ddong_pos_y > SCREEN_HEIGHT - platform_height - ddong_height:
+            increase_score()
             ddong_pos_x = random.randint(0, SCREEN_WIDTH - ddong_width + 1)
             ddong_pos_y = -2*random.randint(ddong_height, 500)
 
         if ddong_2_pos_y > SCREEN_HEIGHT - platform_height - ddong_2_height :
+            increase_score()
             ddong_2_pos_x = random.randint(0, SCREEN_WIDTH - ddong_2_width + 1)
             ddong_2_pos_y = -random.randint(ddong_2_height, 200)
 
         if ddong_3_pos_y > SCREEN_HEIGHT - platform_height - ddong_3_height :
+            increase_score()
             ddong_3_pos_x = random.randint(0, SCREEN_WIDTH - ddong_3_width + 1)
             ddong_3_pos_y = -3*random.randint(ddong_3_height, 200)
 
@@ -112,15 +137,15 @@ def gameStart():
 
         # 충돌 검사
         if player_rect.colliderect(ddong_rect):
-            print('충돌')
+            print(SCORE)
             is_running = False
 
         if player_rect.colliderect(ddong_2_rect):
-            print('충돌')
+            print(SCORE)
             is_running = False
 
         if player_rect.colliderect(ddong_3_rect):
-            print('충돌')
+            print(SCORE)
             is_running = False
 
         #랜더(그리기)
@@ -131,8 +156,12 @@ def gameStart():
         screen.blit(ddong_image, (ddong_3_pos_x, ddong_3_pos_y))
 
         # 디스플레이 업데이트
+        draw_score()
         pygame.display.update()
-        count += 1
+
+
     pygame.quit()
+
+
 
 gameStart()
