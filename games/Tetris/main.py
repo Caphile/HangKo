@@ -27,6 +27,8 @@ def gameStart():
 
     global block
     global newBlock
+    global newBlockColor
+    global nextColor
     global creatable
     global score
 
@@ -112,6 +114,7 @@ def gameStart():
         score = 0
         makeInf()
 
+        nextColor = random.randrange(2, 6)
         while not isEnd:
             if creatable == True:
                 clearCount = 0 
@@ -138,9 +141,9 @@ def gameStart():
                 if isEnd == True:
                     break
 
-                global newBlockColor
-                newBlockColor = random.randrange(2, 6)
-                X = int(block_X / 2)
+                newBlockColor = nextColor
+                nextColor = random.randrange(2, 6)
+                X = int(block_X / 2)                                    # 새 블록
                 if newBlockColor == 2:
                     newBlock = [(X - 1, 1), (X, 1), (X - 1, 2), (X, 2)]
                 elif newBlockColor == 3:
@@ -150,12 +153,34 @@ def gameStart():
                 elif newBlockColor == 5:
                     newBlock = [(X - 1, 1), (X, 1), (X + 1, 1), (X + 2, 1)]
 
-
-
                 for (x, y) in newBlock:
                     block[x][y] = newBlockColor
                 creatable = False
 
+                nextBlock = [[0 for _ in range(4)] for _ in range(4)]   # 다음 블록
+                X = 1
+                if nextColor == 2:
+                    nextNewBlock = [(X, 1), (X + 1, 1), (X, 2), (X + 1, 2)]
+                elif nextColor == 3:
+                    nextNewBlock = [(X - 1, 1), (X, 1), (X, 2), (X + 1, 2)]
+                elif nextColor == 4:
+                    nextNewBlock = [(X - 1, 1), (X, 1), (X + 1, 1), (X + 1, 2)]
+                elif nextColor == 5:
+                    nextNewBlock = [(X - 1, 1), (X, 1), (X + 1, 1), (X + 2, 1)]
+
+                infBlock_X = text_X - infMargin - 25
+                infBlock_Y = text_Y + infMargin * 2
+                for (x, y) in nextNewBlock:
+                    nextBlock[x][y] = nextColor
+
+                for i in range(4):
+                    for j in range(4):
+                        color = nextBlock[j][i]
+                        if color != 0 and color != 1:
+                            pg.draw.rect(ttDis, colors[color], (infBlock_X + j * blockSize, infBlock_Y + i * blockSize, blockSize, blockSize))
+                            pg.draw.rect(ttDis, BLACK, (infBlock_X + j * blockSize, infBlock_Y + i * blockSize, blockSize, blockSize), 1)
+                        else:
+                            pg.draw.rect(ttDis, BLACK, (infBlock_X + j * blockSize, infBlock_Y + i * blockSize, blockSize, blockSize))
 
             elif creatable == False:
                 moveDown(0, 1)
@@ -258,3 +283,5 @@ def rvs():
         pass
     if newBlockColor == 4:
         pass
+
+gameStart()
