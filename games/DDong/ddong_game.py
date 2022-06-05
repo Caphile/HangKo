@@ -7,7 +7,7 @@ SCORE = 0
 
 current_path = os.path.dirname(__file__)  # 현재 파일의 위치 반환
 imamge_path = os.path.join(current_path, "images")  # images 폴더 위치 반환
-record_paht = os.path.join(current_path, 'record.txt')
+record_path = os.path.join(current_path, 'record.txt')
 
 def draw_score():
     font_01 = pygame.font.SysFont("FixedSsy", 30, True, False)
@@ -18,8 +18,19 @@ def draw_score():
 def increase_score():
     global SCORE
     SCORE += 10
-    
 
+def record_score():
+    fd = open(record_path, 'r', encoding = 'UTF8')
+    line = fd.readline()
+    if line == '':
+        fw = open(record_path, 'w')  # 기록을 저장
+        fw.write(str(SCORE))
+        fw.close()
+    elif int(line) < int(SCORE):  # 현재 기록이 최고기록을 넘으면
+        fw = open(record_path, 'w')  # 기록을 저장
+        fw.write(str(SCORE))
+        fw.close()
+    fd.close()
 
 def gameStart():
     global screen
@@ -159,7 +170,7 @@ def gameStart():
         draw_score()
         pygame.display.update()
 
-
+    record_score()
     pygame.quit()
 
 
