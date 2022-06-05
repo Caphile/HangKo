@@ -11,10 +11,10 @@ def gameStart():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # 데이터 로드
-    background_image = pygame.image.load('resources/images/background.png')
-    platform_image = pygame.image.load('resources/images/platform.png')
-    player_image = pygame.image.load('resources/images/man.png')
-    ddong_image = pygame.image.load('resources/images/ddong.png')
+    background_image = pygame.image.load('images/background.png')
+    platform_image = pygame.image.load('images/platform.png')
+    player_image = pygame.image.load('images/man.png')
+    ddong_image = pygame.image.load('images/ddong.png')
 
     # 바닥 초기화
     platform_height = platform_image.get_size()[1]
