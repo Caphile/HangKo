@@ -283,5 +283,3 @@ def rvs():
         pass
     if newBlockColor == 4:
         pass
-
-gameStart()
