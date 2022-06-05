@@ -55,13 +55,13 @@ def gameStart():
 
     # 충돌처리
     def collision_detection1(obstacle_1_x_pos, obstacle_1_height, bird_y_pos, bottom_1_y):
-        if 150 <= obstacle_1_x_pos <= (150 + 80): 
+        if 150 <= obstacle_1_x_pos <= (150 + character_height): 
             if bird_y_pos <= obstacle_1_height or bird_y_pos >= bottom_1_y:
                 return True
         return False
 
     def collision_detection2(obstacle_2_x_pos, obstacle_2_height, bird_y_pos, bottom_2_y):
-        if 150 <= obstacle_2_x_pos <= (150 + 80):
+        if 150 <= obstacle_2_x_pos <= (150 + chracter_height):
             if bird_y_pos <= obstacle_2_height or bird_y_pos >= bottom_2_y:
                 return True
         return False
