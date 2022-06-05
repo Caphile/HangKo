@@ -1,12 +1,12 @@
 import pygame
 import random
 # from os import path
-
+  
 pygame.init()
-
+  
 background = pygame.display.set_mode((720, 720))
 pygame.display.set_caption("BRICK BREAKING")
-
+   
 # 배경 사이즈
 size_w_bg = background.get_size()[0]
 size_h_bg = background.get_size()[1]
