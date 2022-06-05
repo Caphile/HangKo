@@ -196,7 +196,6 @@ def gameStart():
                     if exitBtn.collidepoint(event.pos):
                         isEnd = True
                         running = False
-                        state = 1
 
         for event in pg.event.get():
             # 프로그램 종료
@@ -217,7 +216,6 @@ def gameStart():
                 elif exitBtn.collidepoint(event.pos):
                     running = False
                     isEnd = True
-                    state = 1
     return state
 
 def moveDown(tx, ty):
@@ -260,6 +258,3 @@ def rvs():
         pass
     if newBlockColor == 4:
         pass
-
-
-gameStart()
