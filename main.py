@@ -1,5 +1,4 @@
-import sys
-import os
+import sys, os
 import pygame as pg
 
 import common as c

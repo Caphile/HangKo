@@ -1,5 +1,4 @@
-import sys
-import os
+import sys, os
 import pygame as pg
 import random
 
@@ -31,6 +30,8 @@ def gameStart():
     global nextColor
     global creatable
     global score
+
+    score = 0
 
     # 기본 틀
     pg.display.set_caption("Tetris")
@@ -114,7 +115,6 @@ def gameStart():
         exitTextRect.center = (text_X, text_Y + infHeight + infMargin + btnHeight / 2 + 90)
         ttDis.blit(exitBtnText, exitTextRect)
 
-        score = 0
         makeInf()
 
         nextColor = random.randrange(2, 6)
@@ -233,6 +233,7 @@ def gameStart():
             # 클릭 이벤트
             elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 if playBtn.collidepoint(event.pos):
+                    score = 0
                     isEnd = False
                     block = [[1 for _ in range(block_Y)] for _ in range(block_X)]   # 0 GRAY, 1 BLACK, 2 BLUE, 3 GREEN, 4 PINK, 5 ORAGNE
                     for i in range(block_X):
