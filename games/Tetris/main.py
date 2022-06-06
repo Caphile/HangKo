@@ -66,6 +66,9 @@ def gameStart():
     text_Y = infMargin * 2
 
     def makeInf():
+        infBack = pg.draw.rect(ttDis, BLACK, (gameBoardWidth + gameBoardMargin * 2 + infMargin, infMargin * 2, infWidth, infHeight))
+        Inf = pg.draw.rect(ttDis, WHITE, (gameBoardWidth + gameBoardMargin * 2 + infMargin, infMargin * 2, infWidth, infHeight), 10)
+
         infFont = pg.font.SysFont("malgungothic", 28)
         blockInfText = infFont.render("다음 블록", True, WHITE)
         blockInfRect = blockInfText.get_rect()
@@ -211,16 +214,16 @@ def gameStart():
                     elif event.key == pg.K_SPACE:   # 스페이스, 하드 드랍
                         while creatable == False:
                             moveDown(0, 1)
-                    elif event.key == pg.K_z:   # z키, 반 시계 회전
-                        turn(0)
-                    elif event.key == pg.K_x:   # x키, 시계 회전
+                    elif event.key == pg.K_z:   # z키, 시계 회전
                         turn(1)
-                    elif event.key == pg.K_c:   # c키, 뒤집기
+                    elif event.key == pg.K_x:   # x키, 뒤집기
                         rvs()
                 elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if exitBtn.collidepoint(event.pos):
                         isEnd = True
                         running = False
+
+#------------------------------------------------------------------------
 
         for event in pg.event.get():
             # 프로그램 종료
@@ -275,11 +278,86 @@ def move(tx, ty):
 
     pg.display.update()
 
-def turn():
-    pass
+def turn(dir):  # dir : -1 반시계, 1 시계        반시계 오류로 잠정 제외
+    if newBlockColor == 3 or newBlockColor == 4:    # z자, ㄱ자
+        centerIdx = 1
+        cx, cy = newBlock[centerIdx]
+        for i in [0, 2, 3]:
+            tx, ty = newBlock[i]
+            block[tx][ty] = 1
+            if cx == tx and cy + 1 == ty:
+                tx -= dir
+                ty -= 1
+            elif cx == tx and cy - 1 == ty:
+                tx += dir
+                ty += 1
+            elif cx + 1 == tx and cy == ty:
+                tx -= dir
+                ty += 1
+            elif cx + 1 == tx and cy + 1 == ty:
+                tx -= dir + 1
+                ty += dir - 1
+            elif cx + 1 == tx and cy - 1 == ty:
+                tx += dir - 1
+                ty += dir + 1
+            elif cx - 1 == tx and cy == ty:
+                tx += 1
+                ty -= dir
+            elif cx - 1 == tx and cy + 1 == ty:
+                tx += dir - 1
+                ty -= dir + 1
+            elif cx - 1 == tx and cy - 1 == ty:
+                tx += dir + 1
+                ty -= dir - 1
 
+            newBlock[i] = (tx, ty)
+
+    elif newBlockColor == 5:    # 1자
+        centerIdx = 2
+        cx, cy = newBlock[centerIdx]
+        tempIdx = 0
+        tx, ty = newBlock[tempIdx]
+
+        if cx != tx:    # 가로 -> 세로
+            dir = 1
+        else:
+            dir = -1    # 세로 -> 가로
+
+        for i in [0, 1, 3]:
+            tx, ty = newBlock[i]
+            block[tx][ty] = 1
+            if dir == 1:
+                tx = cx
+                ty = cy + i - 2
+            else:
+                tx = cx + i - 2
+                ty = cy
+
+            newBlock[i] = (tx, ty)
+
+    for (x, y) in newBlock:
+        block[x][y] = newBlockColor
+            
 def rvs():
     if newBlockColor == 3:
-        pass
-    if newBlockColor == 4:
-        pass
+        x1, y1 = newBlock[0]
+        block[x1][y1] = 1
+        x2, y2 = newBlock[3]
+        block[x2][y2] = 1
+        newBlock[0] = (x2, y1)
+        newBlock[3] = (x1, y2)
+
+    elif newBlockColor == 4:
+        tx, ty = newBlock[3]
+        block[tx][ty] = 1
+        cx, cy = newBlock[1]    # 비교
+       
+        if cx < tx:    # 오른쪽 -> 왼쪽
+            tx -= 2
+        else:           # 왼쪽 -> 오른쪽
+            tx += 2
+
+        newBlock[3] = (tx, ty)
+
+    for (x, y) in newBlock:
+        block[x][y] = newBlockColor
