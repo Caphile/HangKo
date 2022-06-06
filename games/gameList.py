@@ -3,7 +3,7 @@ import os, sys, glob
 import games.Tetris.main as Tet
 import games.snakeGame.main as snake
 import games.flappybird.main as bird
-#import games.DDong.main as DD
+import games.DDong.main as DD
 import games.BrickBreaking.main as BB
 
 # # 게임 리스트 불러오기

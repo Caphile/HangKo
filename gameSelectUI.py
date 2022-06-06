@@ -16,6 +16,9 @@ def gameSelectStart():
 
     running = True
     while running:
+
+        pg.init()
+
         pg.display.set_caption("게임선택")
         myFont = pg.font.SysFont("malgungothic", 30)
         gsDis = pg.display.set_mode(c.winSize)
