@@ -33,6 +33,9 @@ def record_score():
     fd.close()
 
 def gameStart():
+
+    state = 0
+
     global screen
     # 화면 크기 정보
     SCREEN_WIDTH = 720
@@ -92,6 +95,7 @@ def gameStart():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_running = False
+                state = 1
 
         # 업데이트
         key = pygame.key.get_pressed()
@@ -171,4 +175,4 @@ def gameStart():
         pygame.display.update()
 
     record_score()
-    pygame.quit()
+    return state
