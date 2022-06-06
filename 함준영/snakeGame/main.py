@@ -161,4 +161,3 @@ def gameStart():
         pygame.display.update()
 
     pygame.quit()
-gameStart()
