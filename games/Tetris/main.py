@@ -134,7 +134,7 @@ def gameStart():
                             block[i][1] = 1
                         clearCount += 1
 
-                score += int(clearCount * (clearCount + 1) / 2) * 100
+                score += int(clearCount * (clearCount + 1) / 2)
                 makeInf()
 
                 for i in range(1, block_X - 1): # 게임 오버

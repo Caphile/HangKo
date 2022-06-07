@@ -1,6 +1,9 @@
 import pygame, sys, random, os
 from pygame.math import Vector2 
 
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+
 class SNAKE:
     def __init__(self): # 뱀의 초기값
         self.snake = [Vector2(18, 33),Vector2(18, 34),Vector2(18, 35)]
@@ -67,11 +70,16 @@ class game:
     def __init__(self):
         self.character = SNAKE()
         self.apple = Apple()
+
+    def getScore(self):
+        return str(len(self.character.snake) - 3)
         
     def checkSys(self):
         self.character.snakeMove()
         self.snakeEat()
-        self.snakeCollision()
+        if self.snakeCollision() == 0:
+            return False    # 종료
+        return True    # 계속 진행
     
     def snakeEat(self): # 뱀이 과일을 먹으면
         if self.apple.place == self.character.snake[0]:
@@ -91,6 +99,7 @@ class game:
         textRect = scoreText.get_rect(center = (textX,textY))
         screen.blit(scoreText,textRect)
     
+    '''
     def recordScore(self):
         record = str(len(self.character.snake) - 3) # 사과 먹을 때마다 +1
         fr=open(record_path, 'r', encoding='UTF8') # 최고기록을 저장
@@ -104,21 +113,25 @@ class game:
             fw.write(record)
             fw.close()
         fr.close()
+     '''
         
     def snakeCollision(self): # 게임종료 조건
         if not 0 <= self.character.snake[0].x < boardPlace or not 0 <= self.character.snake[0].y < boardPlace:
-            self.gameOver() # 뱀이 화면 끝에 닿으면 게임종료
+            #self.gameOver() # 뱀이 화면 끝에 닿으면 게임종료
+            return 0
         
         for i in self.character.snake[1:]: # 뱀의 머리와 몸통이
             if i == self.character.snake[0]: # 만나면 게임종료
-                self.gameOver() 
-
-        
+                #self.gameOver() 
+                return 0
+    '''
     def gameOver(self):
         pygame.quit()
         sys.exit()
+    '''
 
 pygame.init()
+
 boardSize = 20
 boardPlace = 36
 
@@ -133,17 +146,23 @@ font = pygame.font.SysFont("notosanscjkkr", 30)
 SCREEN_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(SCREEN_UPDATE, 150)
 
-game_play = game()
-
 def gameStart():
-    while True:
+
+    pygame.init()
+    state = 0
+
+    game_play = game()
+
+    running = True
+    while running:
         dt = clock.tick(144)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                running = False
+                state = 1
             if event.type == SCREEN_UPDATE:
-                game_play.checkSys()
+                if game_play.checkSys() == False:
+                    running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     if game_play.character.moveDirection.y != 1: # 현재 이동 방향과 정반대의 방향으로 움직일 수 없다
@@ -158,9 +177,49 @@ def gameStart():
                     if game_play.character.moveDirection.x != -1:
                         game_play.character.moveDirection = Vector2(1,0) # 이동 방향을 위로 변경
         
-        game_play.recordScore()
+        #game_play.recordScore()
         screen.fill((100, 100, 100))
         game_play.drawAll()
         pygame.display.update()
 
-    pygame.quit()
+        if running == False:
+            is_running = False
+
+            screen.fill(WHITE)
+
+            gameOverFont = pygame.font.SysFont("FixedSsy", 100, True, False)
+            gameOverText = gameOverFont.render("GAME OVER", True, BLACK)
+            gameOverRect = gameOverText.get_rect()
+            gameOverRect.center = (360, 300)
+            screen.blit(gameOverText, gameOverRect)
+
+            scoreFont = pygame.font.SysFont("FixedSsy", 52, True, False)
+            scoreText = scoreFont.render('score   ' + game_play.getScore(), True, BLACK)
+            scoreRect = scoreText.get_rect()
+            scoreRect.center = (360, 400)
+            screen.blit(scoreText, scoreRect)
+
+            pygame.display.update()
+            pygame.time.delay(2000)
+
+    saveRecord(loadRecord(), game_play.getScore())
+    return state
+
+def loadRecord():
+    currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+    file = open(os.path.join(currentPath, 'record.txt'), 'r')
+
+    high = file.readline()
+
+    file.close()
+
+    return high
+
+def saveRecord(high, record):   # record는 항상 int
+    if high == '' or int(high) < int(record):
+        currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+        file = open(os.path.join(currentPath, 'record.txt'), 'w')
+
+        file.write(str(record))
+
+        file.close()
