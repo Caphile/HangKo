@@ -47,7 +47,7 @@ def gameSelectStart():
         panelMargin = 30
         panelWidth = c.winWidth - panelMargin * 2
         panelHeight = boxMargin - panelMargin + gameBoxHeight * 2 + textHeight * 2
-        gameListPanel = pg.draw.rect(gsDis, c.BLACK, (panelMargin, panelMargin, panelWidth, panelHeight), 1)
+        gameListPanel = pg.draw.rect(gsDis, c.BLACK, (panelMargin, panelMargin, panelWidth, panelHeight), 5)
 
         gameBox = []
         gameName = []
@@ -69,7 +69,7 @@ def gameSelectStart():
 
             if gamePerPage / 2 > i:
                 gameBox.append(pg.draw.rect(gsDis, color, (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * i + 10, gameBox_Y - gameBoxHeight / 2, 
-                                                            gameBoxWidth, gameBoxHeight), 1))
+                                                            gameBoxWidth, gameBoxHeight), 3))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
@@ -88,7 +88,7 @@ def gameSelectStart():
             else:
                 j = i - gamePerPage / 2
                 gameBox.append(pg.draw.rect(gsDis, color, (gameBox_X - gameBoxWidth / 2 + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y - gameBoxHeight / 2 + gameBoxHeight + textHeight, 
-                                                            gameBoxWidth, gameBoxHeight), 1))
+                                                            gameBoxWidth, gameBoxHeight), 3))
                 if len(inf.icon) > idx:
                     gameName.append(inf.game[idx])
                     gameIcon.append(pg.transform.scale(pg.image.load(inf.icon[idx]), (gameBoxWidth - 10, gameBoxHeight - 10)))
