@@ -5,6 +5,8 @@ import os, sys
 def gameStart():
     pygame.init()
 
+    state = 0
+
     height = 720
     width = 720
     screen = pygame.display.set_mode((width, height))  # 화면 세팅
@@ -79,6 +81,8 @@ def gameStart():
     def start():
         display = font_start.render(f"Game Start: space bar", True, (255, 255, 255))
         screen.blit(display, (90, 200))
+        display = font_start.render(f"QUIT: ESC", True, (255, 255, 255))
+        screen.blit(display, (225, 650))
         pygame.display.update()
 
     # 게임 오버 글씨
@@ -94,6 +98,7 @@ def gameStart():
         screen.blit(display1, (145, 350))
         display2 = font2_score.render(f"score: {score} 1ST: {maxscore}", True, (255, 255, 255))
         screen.blit(display2, (220, 600))
+        pygame.display.update()
 
     running = True
     waiting = True
@@ -103,6 +108,7 @@ def gameStart():
     clock = pygame.time.Clock()
 
     while running:
+
         clock.tick(60)
         screen.fill((0, 0, 0))
         screen.blit(background, (0, 0))
@@ -122,8 +128,12 @@ def gameStart():
                         obstacle_1_x_pos = 400
                         obstacle_2_x_pos = width
                         waiting = False
+                    elif event.key == pygame.K_ESCAPE:
+                        waiting = False
+                        running = False
 
                 if event.type == pygame.QUIT:
+                    state = 1
                     waiting = False
                     running = False
 
@@ -177,5 +187,24 @@ def gameStart():
 
         pygame.display.update()
 
-    pygame.quit()
-gameStart()
+    saveRecord(loadRecord(), score)
+    return state
+
+def loadRecord():
+    currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+    file = open(os.path.join(currentPath, 'record.txt'), 'r')
+
+    high = file.readline()
+
+    file.close()
+
+    return high
+
+def saveRecord(high, record):   # record는 항상 int
+    if high == '' or int(high) < int(record):
+        currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+        file = open(os.path.join(currentPath, 'record.txt'), 'w')
+
+        file.write(str(record))
+
+        file.close()
