@@ -1,9 +1,9 @@
 import os, sys, glob
 
 import games.Tetris.main as Tet
-import games.snakeGame.main as snake
-import games.flappybird.main as bird
-import games.DDong.main as DD
+import games.SnakeGame.main as snake
+import games.FlappyBird.main as bird
+import games.DdongPihagi.main as DD
 import games.BrickBreaking.main as BB
 
 # # 게임 리스트 불러오기
@@ -39,11 +39,11 @@ pageNum = int(gameNum / gamePerPage)
 def playSelectedGame(name):
     if name == 'Tetris':
         return Tet.gameStart()
-    elif name == 'snakeGame':
+    elif name == 'SnakeGame':
         return snake.gameStart()
-    elif name == 'flappybird':
+    elif name == 'FlappyBird':
         return bird.gameStart()
-    elif name == 'DDong':
+    elif name == 'DDongPihagi':
         return DD.gameStart()
     elif name == 'BrickBreaking':
         return BB.gameStart()
