@@ -245,6 +245,8 @@ def gameStart():
                 elif exitBtn.collidepoint(event.pos):
                     running = False
                     isEnd = True
+
+    saveRecord(loadRecord(), score)
     return state
 
 def moveDown(tx, ty):
@@ -362,3 +364,23 @@ def rvs():
 
     for (x, y) in newBlock:
         block[x][y] = newBlockColor
+
+#saveRecord(loadRecord(), score)
+def loadRecord():
+    currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+    file = open(os.path.join(currentPath, 'record.txt'), 'r')
+
+    high = file.readline()
+
+    file.close()
+
+    return high
+
+def saveRecord(high, record):   # record는 항상 int
+    if high == '' or int(high) < int(record):
+        currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+        file = open(os.path.join(currentPath, 'record.txt'), 'w')
+
+        file.write(str(record))
+
+        file.close()

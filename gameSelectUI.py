@@ -6,18 +6,20 @@ import common as c
 
 def gameSelectStart():
 
-    gameNum = inf.gameNum
-    gamePerPage = inf.gamePerPage
-    pageNum = inf.pageNum
-
-    state = 0   # 0 뒤로가기, 1 프로그램 종료
     currentPage = 0 # 현재 게임 페이지, 초기값 0
-    focus = 0   # 게임 focus 선택된 게임 번호, 초기값 0
+    focus = 0   # 게임 focus 선택된 게임 번호, 초기값 0     
 
     running = True
     while running:
 
         pg.init()
+        state = 0   # 0 뒤로가기, 1 프로그램 종료
+
+        inf.getInf()
+
+        gameNum = inf.gameNum
+        gamePerPage = inf.gamePerPage
+        pageNum = inf.pageNum
 
         pg.display.set_caption("게임선택")
         myFont = pg.font.SysFont("malgungothic", 30)

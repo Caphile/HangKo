@@ -1,8 +1,11 @@
 import pygame
 import random
+import os
 
 def gameStart():
   
+    state = 0
+
     pygame.init()
 
     background = pygame.display.set_mode((720, 720))
@@ -20,7 +23,6 @@ def gameStart():
     y_pos_ped = size_h_bg - size_h_ped
 
     rect_ped = pygame.Rect(x_pos_ped, y_pos_ped, size_w_pad, size_h_ped)
-    \
 
     # 패들 좌.우 움직이기
     to_x_ped = 0
@@ -97,6 +99,7 @@ def gameStart():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 play = False
+                state = 1
 
             # 마우스로 패들 움직이기
             if event.type == pygame.MOUSEMOTION:
@@ -170,18 +173,28 @@ def gameStart():
         stext = st.render(str(score), True, (142, 170, 255))
         background.blit(stext, (12, 695))
 
-        #최고기록
-        try:
-            with open("record.txt", "r") as f:
-                record = int(f.read())
-        except FileNotFoundError:
-            record = 0
-
-        if score > record:
-            record = score
-            with open("record.txt", "w") as f:
-                f.write(str(score))
-
         pygame.display.update()
 
-    pygame.quit()
+    #최고기록
+    saveRecord(loadRecord(), score)
+
+    return state
+
+def loadRecord():
+    currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+    file = open(os.path.join(currentPath, 'record.txt'), 'r')
+
+    high = file.readline()
+
+    file.close()
+
+    return high
+
+def saveRecord(high, record):   # record는 항상 int
+    if high == '' or int(high) < int(record):
+        currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+        file = open(os.path.join(currentPath, 'record.txt'), 'w')
+
+        file.write(str(record))
+
+        file.close()
