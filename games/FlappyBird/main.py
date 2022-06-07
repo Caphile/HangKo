@@ -55,13 +55,13 @@ def gameStart():
 
     # 충돌처리
     def collision_detection1(obstacle_1_x_pos, obstacle_1_height, bird_y_pos, bottom_1_y):
-        if 150 <= obstacle_1_x_pos <= (150 + character_height): 
+        if 150 <= obstacle_1_x_pos <= (150 + 80): 
             if bird_y_pos <= obstacle_1_height or bird_y_pos >= bottom_1_y:
                 return True
         return False
 
     def collision_detection2(obstacle_2_x_pos, obstacle_2_height, bird_y_pos, bottom_2_y):
-        if 150 <= obstacle_2_x_pos <= (150 + chracter_height):
+        if 150 <= obstacle_2_x_pos <= (150 + 80):
             if bird_y_pos <= obstacle_2_height or bird_y_pos >= bottom_2_y:
                 return True
         return False
@@ -83,7 +83,6 @@ def gameStart():
 
     # 게임 오버 글씨
     score_list = [0]
-    maxscore = 0
 
     font1_gameover = pygame.font.Font('freesansbold.ttf', 80)
     font2_score = pygame.font.Font('freesansbold.ttf', 40)
@@ -95,7 +94,6 @@ def gameStart():
         screen.blit(display1, (145, 350))
         display2 = font2_score.render(f"score: {score} 1ST: {maxscore}", True, (255, 255, 255))
         screen.blit(display2, (220, 600))
-        return maxscore
 
     running = True
     waiting = True
@@ -178,16 +176,6 @@ def gameStart():
         score_display(score)
 
         pygame.display.update()
-        
-        txt = open("C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\flappybird\\record.txt", 'r', 'utf-8')
-        prescore = txt.readline()
-        if prescore == '기록없음':
-           prescore = txt.write(maxscore)
-        elif int(prescore) > maxscore:
-            pass
-        else:
-            prescore = open("C:\\Users\\buij3\\OneDrive\\바탕 화면\\pygame\\flappybird\\record.txt", 'w')
-            prescore.write(maxscore)
-        txt.close()
 
     pygame.quit()
+gameStart()
