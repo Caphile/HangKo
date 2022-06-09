@@ -251,7 +251,14 @@ def gameStart():
                 state = 1
             # 클릭 이벤트
             elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+
+                clickSoundPath = os.path.join(os.path.abspath(os.path.join(currentPath, os.pardir, os.pardir)), 'buttonClick.wav')
+                BCS = pg.mixer.Sound(clickSoundPath)
+
                 if playBtn.collidepoint(event.pos):
+
+                    BCS.play()
+
                     score = 0
                     isEnd = False
                     block = [[1 for _ in range(block_Y)] for _ in range(block_X)]   # 0 GRAY, 1 BLACK, 2 BLUE, 3 GREEN, 4 PINK, 5 ORAGNE
@@ -262,6 +269,9 @@ def gameStart():
                         block[0][i] = 0
                         block[block_X - 1][i] = 0
                 elif exitBtn.collidepoint(event.pos):
+
+                    BCS.play()
+
                     running = False
                     isEnd = True
 
