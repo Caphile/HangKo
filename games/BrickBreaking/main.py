@@ -8,6 +8,10 @@ def gameStart():
 
     pygame.init()
 
+    currentPath = os.path.dirname(__file__)
+    hitSoundPath = os.path.join(currentPath, 'hitSound.mp3')
+    pygame.mixer.music.load(hitSoundPath)
+
     background = pygame.display.set_mode((720, 720))
     pygame.display.set_caption("BRICK BREAKING")
 
@@ -126,6 +130,13 @@ def gameStart():
 
             # y_speed_ball = -y_speed_ball  # 추후 해당 라인을 지우고 바닥에 닿으면 게임오버가 되도록 수정할것
             # 이 라인부터 break까지 주석처리하면 땅에 닿아도 게임오버 안됨
+            gameOverSoundPath = os.path.join(os.path.abspath(os.path.join(currentPath, os.pardir)), 'end.mp3')
+            GOS = pygame.mixer.Sound(gameOverSoundPath)
+            GOS.set_volume(0.2)
+            GOS.play()
+
+            pygame.time.delay(1000)
+
             background.fill((232, 226, 203))
             game_text("GAME OVER")
             pygame.display.update()
@@ -144,6 +155,7 @@ def gameStart():
         # 공 - 패들 닿았을 때
         if rect_ball.colliderect(rect_ped):
             y_speed_ball = -y_speed_ball
+            pygame.mixer.music.play()
 
         # 블록 생성 (for문으로 12*5층 만들기)
         for i in range(12):
@@ -160,7 +172,7 @@ def gameStart():
                         rect_block[i][j] = 0
                         score += 10                                  # 벽돌 하나당 10점
 
-
+                        pygame.mixer.music.play()
 
         # 게임 클리어
         if score == 300:

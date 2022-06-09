@@ -116,10 +116,19 @@ def gameStart():
 
         while waiting:
             if collision1 == True or collision2 == True:
+                collision1 = False
+                collision2 = False
+
                 gameover()
-                start()
-            else:
-                start()
+
+                gameOverSoundPath = os.path.join(os.path.abspath(os.path.join(currentPath, os.pardir)), 'end.mp3')
+                GOS = pygame.mixer.Sound(gameOverSoundPath)
+                GOS.set_volume(0.2)
+                GOS.play()
+
+                pygame.time.delay(1000)
+
+            start()
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -144,6 +153,10 @@ def gameStart():
                 state = 1
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    jumpSoundPath = os.path.join(currentPath, 'jumpSound.mp3')
+                    pygame.mixer.music.load(jumpSoundPath)
+                    pygame.mixer.music.play()
+
                     to_y = -10
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:

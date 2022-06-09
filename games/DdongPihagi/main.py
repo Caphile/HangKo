@@ -179,6 +179,14 @@ def gameStart():
         if isEnd:
             is_running = False
 
+            currentPath = os.path.dirname(__file__)
+            gameOverSoundPath = os.path.join(os.path.abspath(os.path.join(currentPath, os.pardir)), 'end.mp3')
+            GOS = pygame.mixer.Sound(gameOverSoundPath)
+            GOS.set_volume(0.2)
+            GOS.play()
+
+            pygame.time.delay(1000)
+
             screen.fill(WHITE)
 
             gameOverFont = pygame.font.SysFont("FixedSsy", 100, True, False)

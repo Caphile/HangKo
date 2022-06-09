@@ -83,7 +83,7 @@ class game:
     
     def snakeEat(self): # 뱀이 과일을 먹으면
         if self.apple.place == self.character.snake[0]:
-            eatingSound.play()
+            pygame.mixer.music.play()
             self.apple.randomApple() # 과일을 다시 생성
             self.character.makenewSnake() # 뱀의 길이를 1칸 늘림
     
@@ -141,7 +141,7 @@ image_path = os.path.join(current_path, "image") # images 폴더 위치 반환
 record_path = os.path.join(current_path,'record.txt')
 sound_path = os.path.join(current_path, 'eatingSound.mp3')
 
-eatingSound = pygame.mixer.Sound(sound_path)
+pygame.mixer.music.load(sound_path)
 
 screen = pygame.display.set_mode((boardPlace * boardSize, boardPlace * boardSize))
 apple = pygame.image.load(os.path.join(image_path, "apple.png"))# 사과 그래픽 변경

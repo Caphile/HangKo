@@ -26,6 +26,8 @@ def gameStart():
     BGPath = os.path.dirname(__file__)
     BGPath = os.path.join(BGPath, 'background.jpg')
 
+    
+
     global block
     global newBlock
     global newBlockColor
@@ -130,6 +132,9 @@ def gameStart():
                             fullChk = False
                             break
                     if fullChk == True:
+                        scoreSoundPath = os.path.join(currentPath, 'scoreSound.mp3')
+                        pg.mixer.music.load(scoreSoundPath)
+                        pg.mixer.music.play()
                         for i in range(1, block_X - 1):
                             for j in range(line, 1, -1):
                                 block[i][j] = block[i][j - 1]
@@ -211,18 +216,26 @@ def gameStart():
                     state = 1
                 # 키보드 이벤트
                 elif event.type == pg.KEYDOWN:
+                    blockSoundPath = os.path.join(currentPath, 'blockSound.mp3')
+                    pg.mixer.music.load(blockSoundPath)
                     if event.key == pg.K_LEFT:
+                        pg.mixer.music.play()
                         move(-1, 0)
                     elif event.key == pg.K_RIGHT:
+                        pg.mixer.music.play()
                         move(1, 0)
                     elif event.key == pg.K_DOWN:    # 아래 방향키, 소프트 드랍
+                        pg.mixer.music.play()
                         moveDown(0, 1)
                     elif event.key == pg.K_SPACE:   # 스페이스, 하드 드랍
+                        pg.mixer.music.play()
                         while creatable == False:
                             moveDown(0, 1)
                     elif event.key == pg.K_z:   # z키, 시계 회전
+                        pg.mixer.music.play()
                         turn(1)
                     elif event.key == pg.K_x:   # x키, 뒤집기
+                        pg.mixer.music.play()
                         rvs()
                 elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                     if exitBtn.collidepoint(event.pos):
