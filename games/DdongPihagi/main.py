@@ -3,39 +3,24 @@ import pygame, sys, os, random
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 GRAY = (150, 150, 150)
-SCORE = 0
 
 current_path = os.path.dirname(__file__)  # 현재 파일의 위치 반환
 imamge_path = os.path.join(current_path, "images")  # images 폴더 위치 반환
 record_path = os.path.join(current_path, 'record.txt')
 
-def draw_score():
+def draw_score(SCORE):
     font_01 = pygame.font.SysFont("FixedSsy", 30, True, False)
     text_score = font_01.render("Score : " + str(SCORE), True, BLACK)
     screen.blit(text_score, [15, 15])
 
-
-def increase_score():
-    global SCORE
-    SCORE += 10
-
-def record_score():
-    fd = open(record_path, 'r', encoding = 'UTF8')
-    line = fd.readline()
-    if line == '':
-        fw = open(record_path, 'w')  # 기록을 저장
-        fw.write(str(SCORE))
-        fw.close()
-    elif int(line) < int(SCORE):  # 현재 기록이 최고기록을 넘으면
-        fw = open(record_path, 'w')  # 기록을 저장
-        fw.write(str(SCORE))
-        fw.close()
-    fd.close()
-
 def gameStart():
-    global screen
-    global SCORE
+
+    pygame.init()
+
+    state = 0
     SCORE = 0
+
+    global screen
     # 화면 크기 정보
     SCREEN_WIDTH = 720
     SCREEN_HEIGHT = 720
@@ -99,6 +84,7 @@ def gameStart():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_running = False
+                state = 1
 
         # 업데이트
         key = pygame.key.get_pressed()
@@ -123,27 +109,27 @@ def gameStart():
         ddong_3_pos_y += 700 * clock.get_time() / 1000
 
         if ddong_pos_y > SCREEN_HEIGHT - platform_height - ddong_height:
-            increase_score()
+            SCORE += 10
             ddong_pos_x = random.randint(0, SCREEN_WIDTH - ddong_width + 1)
             ddong_pos_y = -2*random.randint(ddong_height, 500)
 
         if ddong_2_pos_y > SCREEN_HEIGHT - platform_height - ddong_2_height :
-            increase_score()
+            SCORE += 10
             ddong_2_pos_x = random.randint(0, SCREEN_WIDTH - ddong_2_width + 1)
             ddong_2_pos_y = -random.randint(ddong_2_height, 200)
 
         if ddong_3_pos_y > SCREEN_HEIGHT - platform_height - ddong_3_height :
-            increase_score()
+            SCORE += 10
             ddong_3_pos_x = random.randint(0, SCREEN_WIDTH - ddong_3_width + 1)
             ddong_3_pos_y = -3*random.randint(ddong_3_height, 200)
-
+        
         if SCORE > 500:
             ddong_4_pos_y += 700 * clock.get_time() / 1000
 
-            if ddong_4_pos_y > SCREEN_HEIGHT - platform_height - ddong_4_height:
-                increase_score()
-                ddong_4_pos_x = random.randint(0, SCREEN_WIDTH - ddong_4_width + 1)
-                ddong_4_pos_y = -3 * random.randint(ddong_4_height, 200)
+        if ddong_4_pos_y > SCREEN_HEIGHT - platform_height - ddong_4_height:
+            SCORE += 10
+            ddong_4_pos_x = random.randint(0, SCREEN_WIDTH - ddong_4_width + 1)
+            ddong_4_pos_y = -3 * random.randint(ddong_4_height, 200)
 
         # 각종 처리(충돌)
         player_rect = player_image.get_rect()
@@ -155,7 +141,6 @@ def gameStart():
         ddong_3_rect = ddong_image.get_rect()
         ddong_4_rect = ddong_image.get_rect()
 
-
         ddong_2_rect.x = ddong_2_pos_x
         ddong_2_rect.y = ddong_2_pos_y
         ddong_rect.x = ddong_pos_x
@@ -164,20 +149,16 @@ def gameStart():
         ddong_3_rect.x = ddong_3_pos_x
         ddong_4_rect.x = ddong_4_pos_x
         ddong_4_rect.y = ddong_4_pos_y
+        
 
         # 충돌 검사
+        isEnd = False
         if player_rect.colliderect(ddong_rect):
-            print(SCORE)
-            is_running = False
-
-        if player_rect.colliderect(ddong_2_rect):
-            print(SCORE)
-            is_running = False
-
-        if player_rect.colliderect(ddong_3_rect):
-            print(SCORE)
-            is_running = False
-
+            isEnd = True
+        elif player_rect.colliderect(ddong_2_rect):
+            isEnd = True
+        elif player_rect.colliderect(ddong_3_rect):
+            isEnd = True
         if player_rect.colliderect(ddong_4_rect):
             print(SCORE)
             is_running = False
@@ -192,12 +173,48 @@ def gameStart():
             screen.blit(ddong_image, (ddong_4_pos_x, ddong_4_pos_y))
 
         # 디스플레이 업데이트
-        draw_score()
+        draw_score(SCORE)
         pygame.display.update()
 
-    record_score()
-    pygame.quit()
+        if isEnd:
+            is_running = False
+
+            screen.fill(WHITE)
+
+            gameOverFont = pygame.font.SysFont("FixedSsy", 100, True, False)
+            gameOverText = gameOverFont.render("GAME OVER", True, BLACK)
+            gameOverRect = gameOverText.get_rect()
+            gameOverRect.center = (360, 300)
+            screen.blit(gameOverText, gameOverRect)
+
+            scoreFont = pygame.font.SysFont("FixedSsy", 52, True, False)
+            scoreText = scoreFont.render('score   ' + str(SCORE), True, BLACK)
+            scoreRect = scoreText.get_rect()
+            scoreRect.center = (360, 400)
+            screen.blit(scoreText, scoreRect)
+
+            pygame.display.update()
+            pygame.time.delay(2000)
+
+    saveRecord(loadRecord(), SCORE)
+    return state
 
 
+def loadRecord():
+    currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+    file = open(os.path.join(currentPath, 'record.txt'), 'r')
 
-gameStart()
+    high = file.readline()
+
+    file.close()
+
+    return high
+
+def saveRecord(high, record):   # record는 항상 int
+    if high == '' or int(high) < int(record):
+        currentPath = os.path.dirname(__file__) # 현재 파일의 위치 반환
+        file = open(os.path.join(currentPath, 'record.txt'), 'w')
+
+        file.write(str(record))
+
+        file.close()
