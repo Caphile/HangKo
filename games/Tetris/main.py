@@ -13,6 +13,8 @@ ORANGE = (255,165,0)    # 1자
 
 WINSIZE = (720, 720)
 
+currentPath = os.path.dirname(__file__)
+
 def gameStart():
 
     pg.init()
@@ -142,6 +144,10 @@ def gameStart():
                         isEnd = True
                         break
                 if isEnd == True:
+                    gameOverSoundPath = os.path.join(os.path.abspath(os.path.join(currentPath, os.pardir)), 'end.mp3')
+                    GOS = pg.mixer.Sound(gameOverSoundPath)
+                    GOS.set_volume(0.2)
+                    GOS.play()
                     break
 
                 newBlockColor = nextColor

@@ -10,3 +10,21 @@ GRAY = (128, 128, 128)
 winWidth = 720
 winHeight = 720
 winSize = (winWidth, winHeight)
+
+isPlay = False
+
+import pygame, os
+
+def backSound(path):
+    soundPath = path
+    soundPath = os.path.join(soundPath, 'background.mp3')
+
+    global BS
+    BS = pygame.mixer.Sound(soundPath)
+    return BS
+
+def clickSound(path):
+    soundPath = path
+    soundPath = os.path.join(soundPath, 'buttonClick.wav')
+    CS = pygame.mixer.Sound(soundPath)
+    return CS

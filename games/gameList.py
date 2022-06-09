@@ -21,7 +21,7 @@ def getInf():
     dirList = os.listdir(currentPath)
 
     for i in dirList:
-        if not(i == '__pycache__' or i == 'gameList.py'):
+        if not(i == '__pycache__' or i == 'gameList.py' or i == 'end.mp3'):
             game.append(i)
             icon.append(os.path.join(currentPath, i, 'icon.png'))
 

@@ -4,6 +4,8 @@ import pygame as pg
 import games.gameList as inf
 import common as c
 
+currentPath = os.getcwd()
+
 def gameSelectStart():
 
     currentPage = 0 # 현재 게임 페이지, 초기값 0
@@ -14,6 +16,10 @@ def gameSelectStart():
 
         pg.init()
         state = 0   # 0 뒤로가기, 1 프로그램 종료
+
+        if c.isPlay == False:
+            c.backSound(currentPath).play(-1)
+            c.isPlay = True
 
         inf.getInf()
 
@@ -135,16 +141,21 @@ def gameSelectStart():
                 running = False
                 state = 1
             # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:  
                 for i, box in enumerate(gameBox):
                     if box.collidepoint(event.pos):
+                        c.clickSound(currentPath).play()
                         if len(inf.icon) > i:
                             focus = i
                 if playBtn.collidepoint(event.pos):
+                    c.clickSound(currentPath).play()
+                    c.BS.stop()
+                    c.isPlay = False
                     if inf.playSelectedGame(gameName[focus]) == 1:
                         state = 1
                         running = False
                 elif backBtn.collidepoint(event.pos):
+                    c.clickSound(currentPath).play()
                     running = False
 
     return state

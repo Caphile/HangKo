@@ -83,6 +83,7 @@ class game:
     
     def snakeEat(self): # 뱀이 과일을 먹으면
         if self.apple.place == self.character.snake[0]:
+            eatingSound.play()
             self.apple.randomApple() # 과일을 다시 생성
             self.character.makenewSnake() # 뱀의 길이를 1칸 늘림
     
@@ -138,6 +139,9 @@ boardPlace = 36
 current_path = os.path.dirname(__file__) # 현재 파일의 위치 반환
 image_path = os.path.join(current_path, "image") # images 폴더 위치 반환
 record_path = os.path.join(current_path,'record.txt')
+sound_path = os.path.join(current_path, 'eatingSound.mp3')
+
+eatingSound = pygame.mixer.Sound(sound_path)
 
 screen = pygame.display.set_mode((boardPlace * boardSize, boardPlace * boardSize))
 apple = pygame.image.load(os.path.join(image_path, "apple.png"))# 사과 그래픽 변경
@@ -185,6 +189,13 @@ def gameStart():
         if running == False:
             is_running = False
 
+            gameOverSoundPath = os.path.join(os.path.abspath(os.path.join(current_path, os.pardir)), 'end.mp3')
+            GOS = pygame.mixer.Sound(gameOverSoundPath)
+            GOS.set_volume(0.2)
+            GOS.play()
+
+            pygame.time.delay(1000)
+
             screen.fill(WHITE)
 
             gameOverFont = pygame.font.SysFont("FixedSsy", 100, True, False)
@@ -200,7 +211,7 @@ def gameStart():
             screen.blit(scoreText, scoreRect)
 
             pygame.display.update()
-            pygame.time.delay(2000)
+            pygame.time.delay(2500)
 
     saveRecord(loadRecord(), game_play.getScore())
     return state

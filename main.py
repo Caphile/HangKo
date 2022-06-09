@@ -13,6 +13,11 @@ def mainStart():
 
     running = True
     while running:
+
+        if c.isPlay == False:
+            c.backSound(currentPath).play(-1)
+            c.isPlay = True
+
         # 기본 틀
         myFont = pg.font.SysFont("malgungothic", 36)
         pg.display.set_caption("HangKo")
@@ -63,9 +68,11 @@ def mainStart():
             # 클릭 이벤트
             elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 if playBtn.collidepoint(event.pos):
+                    c.clickSound(currentPath).play()
                     if gameSelectUI.gameSelectStart() == 1:
                         running = False
                 elif exitBtn.collidepoint(event.pos):
+                    c.clickSound(currentPath).play()
                     running = False
 
 mainStart()

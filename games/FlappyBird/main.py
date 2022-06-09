@@ -2,6 +2,8 @@ import pygame
 import random
 import os, sys
 
+currentPath = os.path.dirname(__file__)
+
 def gameStart():
     pygame.init()
 
@@ -92,7 +94,6 @@ def gameStart():
     font2_score = pygame.font.Font('freesansbold.ttf', 40)
 
     def gameover():
-
         maxscore = max(score_list)
         display1 = font1_gameover.render(f"Game Over", True, (200,35,35))
         screen.blit(display1, (145, 350))
