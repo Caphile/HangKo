@@ -1,47 +1,38 @@
-import sys, os
+import sys
+import os
 import pygame as pg
-
 import games.gameList as inf
 import common as c
 
 currentPath = os.getcwd()
 
 def gameSelectStart():
-
-    currentPage = 0 # 현재 게임 페이지, 초기값 0
-    focus = 0   # 게임 focus 선택된 게임 번호, 초기값 0     
-
+    currentPage = 0
+    focus = 0
     running = True
+    state = 0
+
+    pg.init()
+    pg.display.set_caption("게임선택")
+    gsDis = pg.display.set_mode(c.winSize)
+    myFont = pg.font.SysFont("malgungothic", 30)
+
+    clock = pg.time.Clock()
+
     while running:
-
-        pg.init()
-        state = 0   # 0 뒤로가기, 1 프로그램 종료
-
-        if c.isPlay == False:
+        if not c.isPlay:
             c.backSound(currentPath).play(-1)
             c.isPlay = True
 
         inf.getInf()
 
-        gameNum = inf.gameNum
         gamePerPage = inf.gamePerPage
-        pageNum = inf.pageNum
 
-        pg.display.set_caption("게임선택")
-        myFont = pg.font.SysFont("malgungothic", 30)
-        gsDis = pg.display.set_mode(c.winSize)
         gsDis.fill(c.BLACK)
-
-        BGPath = os.getcwd()
-        BGPath = os.path.join(BGPath, 'background2.png')
-        backGround = pg.image.load(BGPath)
-        backGround = pg.transform.scale(backGround, c.winSize)
+        BGPath = os.path.join(currentPath, 'background2.png')
+        backGround = pg.transform.scale(pg.image.load(BGPath), c.winSize)
         gsDis.blit(backGround, (0, 0))
 
-        clock = pg.time.Clock()
-        clock.tick(30)
-
-        # 게임 박스 구성
         gameBoxWidth = 180
         gameBoxHeight = 180
         boxMargin = 40
@@ -49,7 +40,6 @@ def gameSelectStart():
         gameBox_Y = boxMargin + gameBoxHeight / 2
         textHeight = 80
 
-        # 게임 목록 페널 구성
         panelMargin = 30
         panelWidth = c.winWidth - panelMargin * 2
         panelHeight = boxMargin - panelMargin + gameBoxHeight * 2 + textHeight * 2
@@ -109,39 +99,35 @@ def gameSelectStart():
                     recordRect = record.get_rect()
                     recordRect.center = (gameBox_X + (gameBoxWidth + boxMargin) * j + 10, gameBox_Y + gameBoxHeight * 1.5 + textHeight + 50)
                     gsDis.blit(record, recordRect)
-                   
+
         # 버튼 구성
         btnWidth = 300
         btnHeight = 60
         btnMargin = 20
         playBtn_X = (c.winWidth - btnWidth - btnMargin) / 2
         playBtn_Y = panelMargin + panelHeight + (c.winHeight - (panelMargin + panelHeight + btnHeight)) / 2 + btnHeight / 2
-        backBtn_X =(c.winWidth + btnWidth + btnMargin) / 2
+        backBtn_X = (c.winWidth + btnWidth + btnMargin) / 2
         backBtn_Y = playBtn_Y
 
-        playBtn = pg.draw.rect(gsDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y - btnHeight / 2,
-                                               btnWidth, btnHeight)) # 게임시작
+        playBtn = pg.draw.rect(gsDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y - btnHeight / 2, btnWidth, btnHeight))
         playBtnText = myFont.render("게임시작", True, c.BLACK)
-        playTextRect = playBtnText.get_rect()
-        playTextRect.center = (playBtn_X, playBtn_Y)
+        playTextRect = playBtnText.get_rect(center=(playBtn_X, playBtn_Y))
         gsDis.blit(playBtnText, playTextRect)
 
-
-        backBtn = pg.draw.rect(gsDis, c.GRAY, (backBtn_X - btnWidth / 2, backBtn_Y - btnHeight / 2, 
-                                               btnWidth, btnHeight)) # 뒤로가기
+        backBtn = pg.draw.rect(gsDis, c.GRAY, (backBtn_X - btnWidth / 2, backBtn_Y - btnHeight / 2, btnWidth, btnHeight))
         backBtnText = myFont.render("뒤로가기", True, c.BLACK)
-        backTextRect = backBtnText.get_rect()
-        backTextRect.center = (backBtn_X, backBtn_Y)
+        backTextRect = backBtnText.get_rect(center=(backBtn_X, backBtn_Y))
         gsDis.blit(backBtnText, backTextRect)
 
         pg.display.update()
+
+        clock.tick(30)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
                 state = 1
-            # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:  
+            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
                 for i, box in enumerate(gameBox):
                     if box.collidepoint(event.pos):
                         c.clickSound(currentPath).play()
@@ -159,3 +145,6 @@ def gameSelectStart():
                     running = False
 
     return state
+
+if __name__ == "__main__":
+    gameSelectStart()

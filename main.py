@@ -1,79 +1,75 @@
-import sys, os
+import sys
+import os
 import pygame as pg
-
 import common as c
 import gameSelectUI
 
-currentPath = os.getcwd()
-# currentPath = os.path.join(currentPath, 'HangKo')
-
-def mainStart():
-
+def initialize_display(current_path):
     pg.init()
 
-    running = True
-    while running:
+    # 기본 틀 설정
+    pg.display.set_caption("HangKo")
+    main_dis = pg.display.set_mode(c.winSize)
 
-        if c.isPlay == False:
-            c.backSound(currentPath).play(-1)
+    # 아이콘 설정
+    icon_path = os.path.join(current_path, 'icon.png')
+    icon = pg.image.load(icon_path)
+    pg.display.set_icon(icon)
+
+    # 배경 설정
+    bg_path = os.path.join(current_path, 'background1.png')
+    background = pg.image.load(bg_path).convert()  # 이미지를 미리 변환하여 성능을 향상시킵니다.
+    background = pg.transform.scale(background, c.winSize)
+    main_dis.blit(background, (0, 0))
+
+    pg.display.flip()  # 초기화된 화면을 화면에 반영합니다.
+    return main_dis, background
+
+def draw_button(display, text, center_x, center_y, width, height, color, text_color, action=None):
+    my_font = pg.font.SysFont("malgungothic", 36)
+
+    button_rect = pg.draw.rect(display, color, (center_x - width / 2, center_y - height / 2, width, height))
+    text_render = my_font.render(text, True, text_color)
+    text_rect = text_render.get_rect(center=(center_x, center_y))
+    display.blit(text_render, text_rect)
+
+    if action is not None:
+        if button_rect.collidepoint(pg.mouse.get_pos()):
+            if pg.mouse.get_pressed()[0]:
+                action()
+
+def main_start():
+    current_path = os.getcwd()
+    running = True
+
+    main_dis, background = initialize_display(current_path)
+
+    # 버튼 구성
+    btn_width = 350
+    btn_height = 100
+    play_btn_x = c.winWidth / 2
+    play_btn_y = 220 + btn_height / 2
+    gap = 30
+
+    while running:
+        if not c.isPlay:
+            c.backSound(current_path).play(-1)
             c.isPlay = True
 
-        # 기본 틀
-        myFont = pg.font.SysFont("malgungothic", 36)
-        pg.display.set_caption("HangKo")
-        mainDis = pg.display.set_mode(c.winSize)
+        # 화면 초기화
+        main_dis.blit(background, (0, 0))
 
-        iconPath = currentPath
-        iconPath = os.path.join(iconPath, 'icon.png')
-        icon = pg.image.load(iconPath)
-        pg.display.set_icon(icon)
+        draw_button(main_dis, "게임시작", play_btn_x, play_btn_y, btn_width, btn_height, c.GRAY, c.BLACK, gameSelectUI.gameSelectStart)
+        draw_button(main_dis, "종료", play_btn_x, play_btn_y + btn_height + gap, btn_width, btn_height, c.GRAY, c.BLACK, sys.exit)
 
-        BGPath = currentPath
-        BGPath = os.path.join(BGPath, 'background1.png')
-        backGround = pg.image.load(BGPath)
-        backGround = pg.transform.scale(backGround, c.winSize)
-        mainDis.blit(backGround, (0, 0))
-
-        clock = pg.time.Clock()
-        clock.tick(30)
-
-        # 버튼 구성
-        btnWidth = 350
-        btnHeight = 100
-        playBtn_X = c.winWidth / 2
-        playBtn_Y = 220 + btnHeight / 2
-        gap = 30
-
-        playBtn = pg.draw.rect(mainDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y - btnHeight / 2, 
-                                                 btnWidth, btnHeight)) # 게임시작
-        playBtnText = myFont.render("게임시작", True, c.BLACK)
-        playTextRect = playBtnText.get_rect()
-        playTextRect.center = (playBtn_X, playBtn_Y)
-        mainDis.blit(playBtnText, playTextRect)
-
-        exitBtn = pg.draw.rect(mainDis, c.GRAY, (playBtn_X - btnWidth / 2, playBtn_Y + btnHeight / 2 + gap, 
-                                                 btnWidth, btnHeight)) # 종료
-        playBtnText = myFont.render("종료", True, c.BLACK)
-        playTextRect = playBtnText.get_rect()
-        playTextRect.center = (playBtn_X, playBtn_Y + btnHeight + gap)
-        mainDis.blit(playBtnText, playTextRect)
-
-
-        pg.display.update()   # 화면 갱신
+        pg.display.update()
+        pg.time.Clock().tick(30)
 
         for event in pg.event.get():
-            # 프로그램 종료
             if event.type == pg.QUIT:
                 running = False
-            # 클릭 이벤트
-            elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                if playBtn.collidepoint(event.pos):
-                    c.clickSound(currentPath).play()
-                    if gameSelectUI.gameSelectStart() == 1:
-                        running = False
-                elif exitBtn.collidepoint(event.pos):
-                    c.clickSound(currentPath).play()
-                    running = False
 
-mainStart()
-pg.quit()
+    pg.quit()
+
+if __name__ == "__main__":
+    main_start()
